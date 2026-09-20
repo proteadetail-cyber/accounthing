@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { ShieldCheck, KeyRound, Loader2, Sparkles, X, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, KeyRound, Loader2, X, CheckCircle2 } from 'lucide-react';
 
 export const LicenseScreen: React.FC = () => {
   const { login, loginWithGoogle, error } = useAuth();
@@ -204,10 +204,9 @@ export const LicenseScreen: React.FC = () => {
             <button
               type="submit"
               disabled={isVerifying || !key.trim()}
-              className="w-full py-4 rounded-xl font-extrabold text-xs tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-lg shadow-cyan-500/25 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-xl font-extrabold text-xs tracking-widest uppercase transition-colors duration-200 bg-blue-600 hover:bg-blue-700 text-white shadow-md active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               <span>{isVerifying ? statusText : (language === 'af' ? 'ONTSLUIT TOEGANG' : 'UNLOCK ACCESS')}</span>
-              {!isVerifying && <Sparkles className="w-4 h-4" />}
             </button>
           </form>
 
