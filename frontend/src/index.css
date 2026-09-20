@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.4s ease;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  .font-calligraphy {
+    font-family: 'Satisfy', cursive;
+  }
+
+  .font-script {
+    font-family: 'Caveat', cursive;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* ELEGANT PEARL BACKGROUNDS */
+.bg-solid-paper1 {
+  background-color: #F4F3ED !important;
+}
+
+.bg-solid-paper2 {
+  background-color: #F6F2EF !important;
+}
+
+/* OFF-WHITE & DARKER PEARL BLOCK CARDS (TURNS DARKER ON HOVER, NO WEIRD OUTLINES) */
+.rock-panel-paper1 {
+  background: #EBE7DF;
+  border: 1px solid #D8D2C4;
+  color: #0F172A;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.rock-panel-paper1:hover {
+  background: #E2DCD0;
+}
+
+.rock-panel-paper2 {
+  background: #E5E0D4;
+  border: 1px solid #D2CBBF;
+  color: #0F172A;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.rock-panel-paper2:hover {
+  background: #DAD4C7;
+}
+
+/* NAVBAR PANEL — MATCHES THE EXACT SAME OFF-WHITE PEARL AS THE BLOCKS */
+.rock-navbar {
+  background: #EBE7DF !important;
+  border: 1px solid #D8D2C4 !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* INPUT BOXES — CRISP WHITE BACKGROUND WITH SOLID BLACK FONT */
+.rock-input {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: 1.5px solid #CBD5E1 !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.rock-input::placeholder {
+  color: #64748B !important;
+  font-weight: 400 !important;
+}
+
+.rock-input:focus {
+  border-color: #0284C7 !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+  outline: none;
+}
+
+/* Custom Scrollbar for Pearl Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E8E4DD;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.25);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.4);
+}

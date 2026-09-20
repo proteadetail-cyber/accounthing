@@ -1,0 +1,15 @@
+{
+  "name": "grade12-accounting-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"cyan.bold,magenta.bold\" \"node backend/index.js\" \"npm --prefix frontend run dev\"",
+    "start": "npm --prefix frontend run build && node backend/index.js",
+    "seed": "node backend/db/seed.js",
+    "server": "node backend/index.js",
+    "client": "npm --prefix frontend run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
