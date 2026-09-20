@@ -31,6 +31,12 @@ GitHub Actions as the Pages source and add these repository variables:
 GitHub Pages hosts the frontend only. The backend and database must run on a
 separate service such as Render and Supabase.
 
+The repository also includes `render.yaml` for creating the backend on Render.
+After connecting the repository at Render, choose **Blueprint** and fill in
+the secret environment variables when prompted. Render will provide the public
+backend URL; use that URL as `VITE_BACKEND_URL` in the GitHub repository
+variables, then rerun the Pages workflow.
+
 ---
 
 ## 🌟 Features Included

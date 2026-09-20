@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: accounthing-backend
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm ci --prefix frontend && npm run build --prefix frontend
+    startCommand: node backend/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: JWT_SECRET
+        sync: false
+      - key: MASTER_KEY
+        sync: false
+      - key: WHOP_API_KEY
+        sync: false
+      - key: WHOP_PRODUCT_ID
+        sync: false
+      - key: WHOP_PLAN_ID
+        sync: false
+      - key: WHOP_WEBHOOK_SECRET
+        sync: false
+      - key: WHOP_CHECKOUT_URL
+        sync: false
