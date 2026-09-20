@@ -19,6 +19,18 @@ or
 node backend/index.js
 ```
 
+## Public Hosting
+
+The frontend can be deployed to GitHub Pages by the workflow in
+`.github/workflows/deploy-pages.yml`. In the repository settings, enable
+GitHub Actions as the Pages source and add these repository variables:
+
+- `VITE_BACKEND_URL`: the public URL of the deployed backend, without a trailing slash.
+- `VITE_WHOP_CHECKOUT_URL`: the public Whop checkout URL.
+
+GitHub Pages hosts the frontend only. The backend and database must run on a
+separate service such as Render and Supabase.
+
 ---
 
 ## 🌟 Features Included

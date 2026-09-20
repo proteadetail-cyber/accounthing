@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { StudentSession } from '../types';
+import { API_BASE } from '../config';
 
 interface AuthContextType {
   student: StudentSession | null;
@@ -31,7 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Session verification on mount
   useEffect(() => {
     if (token) {
-      fetch('/api/auth/session', {
+      fetch(`${API_BASE}/api/auth/session`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -50,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (licenseKey: string, language = 'en'): Promise<boolean> => {
     setError(null);
     try {
-      const res = await fetch('/api/auth/license', {
+      const res = await fetch(`${API_BASE}/api/auth/license`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ licenseKey, language })
@@ -80,7 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginWithGoogle = async ({ googleToken, profile, language = 'en' }: { googleToken?: string; profile?: any; language?: string }): Promise<boolean> => {
     setError(null);
     try {
-      const res = await fetch('/api/auth/google', {
+      const res = await fetch(`${API_BASE}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ googleToken, profile, language })
