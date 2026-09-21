@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
-import { DashboardStats, ExamType, PaperType } from '../types';
+import { DashboardStats, PaperType } from '../types';
 import { 
   TrendingUp, CheckCircle2, XCircle, Award, 
   Target, AlertTriangle, Play, Clock, ArrowRight, BookOpen, Activity 
@@ -16,20 +16,22 @@ interface DashboardProps {
 export const Dashboard: React.FC<DashboardProps> = ({ onStartPractice }) => {
   const { paperType, setPaperType, glassClass, accentColor } = useTheme();
   const { t, language } = useLanguage();
-  const { student } = useAuth();
+  const { student, token } = useAuth();
 
-  const [examType, setExamType] = useState<ExamType>('all');
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchStats();
-  }, [paperType, examType]);
+  }, [paperType]);
 
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=${examType}`);
+      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(`Dashboard stats request failed: ${res.status}`);
       const data = await res.json();
       setStats(data);
     } catch (err) {
@@ -58,26 +60,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPractice }) => {
           </h1>
         </div>
 
-        {/* Exam Type Filter Buttons */}
-        <div className="flex items-center gap-1.5 font-mono text-xs flex-wrap">
-          {(['all', 'prelims', 'final'] as ExamType[]).map((type) => {
-            const isActive = examType === type;
-            const labelKey = type === 'all' ? 'filter_all' : type === 'prelims' ? 'filter_prelims' : 'filter_final';
-            return (
-              <button
-                key={type}
-                onClick={() => setExamType(type)}
-                className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold tracking-wider transition-all uppercase whitespace-nowrap shadow-sm ${
-                  isActive
-                    ? 'bg-slate-900 text-white border border-slate-900'
-                    : 'bg-white/80 text-slate-700 hover:text-slate-950 hover:bg-white border border-slate-300/80'
-                }`}
-              >
-                {t(labelKey)}
-              </button>
-            );
-          })}
-        </div>
       </div>
 
       {/* SINGLE CONSOLIDATED MAIN BLOCK: ESTIMATED NEXT PAPER + ALL METRICS */}

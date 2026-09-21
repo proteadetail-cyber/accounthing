@@ -4,7 +4,6 @@ console.log('Seeding OFFICIAL DBE NSC PAST PAPERS (2021-2024) Grade 12 Accountin
 
 // Insert default licenses
 const licenses = [
-  'DEMO-2026-PASS',
   'GRADE12-ACC-2026',
   'STUDENT-7788-ACC',
   'MAROON-GUNMETAL-KEY'
@@ -12,8 +11,6 @@ const licenses = [
 
 const insertLicenseStmt = db.prepare('INSERT OR IGNORE INTO licenses (key_code, is_active) VALUES (?, 1)');
 licenses.forEach(key => insertLicenseStmt.run(key));
-
-db.exec("INSERT OR IGNORE INTO students (id, license_key, language) VALUES (1, 'DEMO-2026-PASS', 'en');");
 
 // Clear existing questions and fields
 db.exec('DELETE FROM answer_fields;');

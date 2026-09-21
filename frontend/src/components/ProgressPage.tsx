@@ -8,7 +8,7 @@ import { LineChart, Trophy, Target, Award, Layers } from 'lucide-react';
 export const ProgressPage: React.FC = () => {
   const { paperType, glassClass, accentColor } = useTheme();
   const { t, language } = useLanguage();
-  const { student } = useAuth();
+  const { student, token } = useAuth();
 
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,10 @@ export const ProgressPage: React.FC = () => {
   const fetchProgressData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`);
+      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(`Progress stats request failed: ${res.status}`);
       const data = await res.json();
       setStats(data);
     } catch (err) {

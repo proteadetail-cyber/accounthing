@@ -20,7 +20,7 @@ interface PracticeModeProps {
 export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initialTopic, practiceMode, selectedQuestionId }) => {
   const { paperType, glassClass, accentColor, accentBorder } = useTheme();
   const { t, language } = useLanguage();
-  const { student } = useAuth();
+  const { student, token } = useAuth();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -41,7 +41,10 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
       let url = `/api/questions?paper_type=${paperType}`;
       if (initialTopic) url += `&topic=${encodeURIComponent(initialTopic)}`;
       
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(`Questions request failed: ${res.status}`);
       const data: Question[] = await res.json();
       setQuestions(data);
       if (selectedQuestionId) {
@@ -71,7 +74,10 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
     try {
       const res = await fetch('/api/attempts/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({
           student_id: student?.id || 1,
           question_id: currentQ.id,

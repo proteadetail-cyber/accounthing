@@ -12,7 +12,7 @@ import {
 export const MockExam: React.FC = () => {
   const { paperType, glassClass, accentColor, showFormulaTitles } = useTheme();
   const { t, language } = useLanguage();
-  const { student } = useAuth();
+  const { student, token } = useAuth();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,7 +40,10 @@ export const MockExam: React.FC = () => {
 
   const startExam = async () => {
     try {
-      const res = await fetch(`/api/questions?paper_type=${paperType}`);
+      const res = await fetch(`/api/questions?paper_type=${paperType}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(`Questions request failed: ${res.status}`);
       const data = await res.json();
       const startIdx = (selectedSet - 1) * 4;
       const setQs = data.slice(startIdx, startIdx + 4);
@@ -77,7 +80,10 @@ export const MockExam: React.FC = () => {
     try {
       const res = await fetch('/api/attempts/mock-submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify({
           student_id: student?.id || 1,
           paper_type: paperType,

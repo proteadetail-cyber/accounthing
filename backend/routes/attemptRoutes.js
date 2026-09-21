@@ -7,15 +7,10 @@ const { requireActiveAccess } = require('../middleware/authMiddleware');
 // Apply access control middleware
 router.use(requireActiveAccess);
 
-// Ensure student exists or create fallback
-function ensureStudent(studentId, licenseKey = 'DEMO-2026-PASS') {
+// Look up the authenticated student without creating fallback accounts.
+function ensureStudent(studentId) {
   const getStmt = db.prepare('SELECT * FROM students WHERE id = ?');
-  let student = getStmt.get(studentId);
-  if (!student) {
-    db.prepare('INSERT OR IGNORE INTO students (id, license_key) VALUES (?, ?)').run(studentId, licenseKey);
-    student = getStmt.get(studentId);
-  }
-  return student;
+  return getStmt.get(studentId);
 }
 
 // POST /api/attempts/submit - Deterministic marking of a question submission

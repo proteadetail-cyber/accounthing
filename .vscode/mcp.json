@@ -3,6 +3,10 @@
     "playwright": {
       "command": "npx",
       "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "omniroute": {
+      "command": "npx",
+      "args": ["-y", "omniroute@3.8.50", "--mcp"]
     }
   }
 }

@@ -35,6 +35,288 @@
   background-color: #F6F2EF !important;
 }
 
+.notepad-page {
+  position: relative;
+  background-color: #f4edcf;
+  background-image:
+    linear-gradient(90deg, transparent 0, transparent 3.2rem, rgba(220, 92, 92, 0.3) 3.2rem, rgba(220, 92, 92, 0.3) 3.3rem, transparent 3.3rem),
+    repeating-linear-gradient(180deg, transparent 0, transparent 2rem, rgba(62, 126, 176, 0.22) 2rem, rgba(62, 126, 176, 0.22) 2.08rem);
+  background-attachment: local;
+}
+
+.notepad-side-marker {
+  position: absolute;
+  top: 12%;
+  right: 1.25rem;
+  bottom: 12%;
+  width: 0.7rem;
+  z-index: 1;
+  border-radius: 999px;
+  background: #090909;
+  cursor: pointer;
+  box-shadow: 2px 0 0 rgba(255, 255, 255, 0.22);
+  transition: transform 0.25s ease, width 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.notepad-side-marker::before {
+  content: '';
+  position: absolute;
+  inset: -0.65rem;
+}
+
+.notepad-side-marker:hover {
+  width: 0.7rem;
+  background: #168ad1;
+  box-shadow: 0 0 0 4px rgba(22, 138, 209, 0.14), 2px 0 0 rgba(255, 255, 255, 0.35);
+  transform: scaleX(2);
+}
+
+.notepad-squiggle-arrow {
+  position: absolute;
+  top: 21%;
+  right: 1.65rem;
+  width: clamp(7rem, 18vw, 11.25rem);
+  height: auto;
+  z-index: 0;
+  overflow: visible;
+  transform: none;
+}
+
+.notepad-key-hint {
+  position: absolute;
+  top: 10%;
+  right: 2.7rem;
+  z-index: 0;
+  color: #090909;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transform: rotate(-3deg);
+}
+
+.notepad-squiggle-arrow path {
+  fill: none;
+  stroke: #090909;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.notepad-squiggle-arrow marker path {
+  fill: #090909;
+  stroke: none;
+}
+
+@media (max-width: 640px) {
+  .notepad-side-marker {
+    right: 0.65rem;
+    width: 0.5rem;
+  }
+
+  .notepad-side-marker:hover {
+    width: 0.72rem;
+    transform: scaleX(1.7);
+  }
+
+  .notepad-squiggle-arrow {
+    top: 20%;
+    right: 1rem;
+    width: 6.5rem;
+  }
+
+  .notepad-key-hint {
+    top: 10%;
+    right: 1.7rem;
+    font-size: 1rem;
+  }
+}
+
+.sticky-note-panel {
+  isolation: isolate;
+  color: #172033;
+}
+
+.sticky-note-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #b9ddf5;
+  border: 1px solid #78b9df;
+  box-shadow: 10px 12px 0 rgba(34, 85, 122, 0.08), 0 18px 35px rgba(34, 85, 122, 0.16);
+  transform: rotate(-0.6deg) skewX(-0.35deg);
+}
+
+.sticky-note-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  z-index: 2;
+  background: #78b9df;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  filter: drop-shadow(-1px 1px 1px rgba(82, 67, 24, 0.2));
+}
+
+.sticky-note-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sticky-note-panel input {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: #78b9df !important;
+}
+
+.whop-mark {
+  display: inline-flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+  background: #ffffff;
+  color: #0b0b0b;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.activate-button {
+  position: relative;
+  display: flex;
+  min-height: 2.875rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  overflow: hidden;
+}
+
+.activate-button__icons {
+  position: relative;
+  display: inline-flex;
+  width: 1.05rem;
+  height: 1.05rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.activate-button__circle,
+.activate-button__arrow,
+.activate-button__check {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.activate-button__circle {
+  position: relative;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
+.activate-button__circle::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(-0.18rem) scale(0.7);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.activate-button:hover:not(:disabled) .activate-button__circle::after {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.activate-button__arrow {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  opacity: 0;
+  transform: translateY(-0.25rem) rotate(45deg);
+}
+
+.activate-button__check {
+  color: #86efac;
+  font-size: 0.95rem;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.activate-button__labels {
+  position: relative;
+  display: inline-flex;
+  height: 1.1rem;
+  overflow: hidden;
+  line-height: 1.1rem;
+}
+
+.activate-button__labels > span {
+  display: block;
+  white-space: nowrap;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.activate-button__labels > span:not(:first-child) {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.activate-button.is-waiting .activate-button__circle {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.activate-button.is-waiting .activate-button__arrow {
+  opacity: 1;
+  animation: activate-arrow-bounce 0.8s ease-in-out infinite alternate;
+}
+
+.activate-button.is-waiting .activate-button__labels > span:first-child,
+.activate-button.is-activated .activate-button__labels > span:first-child {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.activate-button.is-waiting .activate-button__labels > span:nth-child(2),
+.activate-button.is-activated .activate-button__labels > span:nth-child(3) {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.activate-button.is-activated .activate-button__arrow {
+  opacity: 0;
+  transform: translateY(-0.25rem) rotate(45deg);
+}
+
+.activate-button.is-activated .activate-button__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes activate-arrow-bounce {
+  from { transform: translateY(-0.12rem) rotate(45deg); }
+  to { transform: translateY(0.14rem) rotate(45deg); }
+}
+
 /* OFF-WHITE & DARKER PEARL BLOCK CARDS (TURNS DARKER ON HOVER, NO WEIRD OUTLINES) */
 .rock-panel-paper1 {
   background: #EBE7DF;

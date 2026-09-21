@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
 import { Question, PaperType } from '../types';
 import { Database, Filter, Play, CheckCircle } from 'lucide-react';
 
@@ -11,6 +12,7 @@ interface QuestionBankProps {
 export const QuestionBankPage: React.FC<QuestionBankProps> = ({ onSelectQuestion }) => {
   const { paperType, glassClass, accentColor } = useTheme();
   const { t, language } = useLanguage();
+  const { token } = useAuth();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [filterDifficulty, setFilterDifficulty] = useState<string>('all');
@@ -28,7 +30,10 @@ export const QuestionBankPage: React.FC<QuestionBankProps> = ({ onSelectQuestion
       if (filterDifficulty !== 'all') url += `&difficulty=${filterDifficulty}`;
       if (filterExam !== 'all') url += `&exam_type=${filterExam}`;
 
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error(`Question bank request failed: ${res.status}`);
       const data = await res.json();
       setQuestions(data);
     } catch (err) {
