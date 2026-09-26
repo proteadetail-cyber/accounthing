@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-const MASTER_KEY = process.env.MASTER_KEY || 'SA-ACC-MASTER-2026';
+const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
 
 // Middleware for Admin authentication via master key header
 function adminAuth(req, res, next) {

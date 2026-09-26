@@ -5,7 +5,7 @@ const db = require('../db/database');
 const { validateWhopAccess, verifyWhopWebhookSignature } = require('../services/whopService');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sa_accounting_super_secret_jwt_key_2026';
-const MASTER_KEY = process.env.MASTER_KEY || 'SA-ACC-MASTER-2026';
+const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
 
 // POST /api/auth/license (Whop License & Master Key Verification Endpoint)
 router.post('/license', async (req, res) => {

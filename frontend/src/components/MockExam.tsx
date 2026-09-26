@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { Question, PaperType } from '../types';
+import { API_BASE } from '../config';
 import { 
   Clock, AlertCircle, CheckCircle2, ShieldCheck, 
   ArrowRight, ArrowLeft, Send, Award, FileSpreadsheet, BookOpen 
@@ -40,7 +41,7 @@ export const MockExam: React.FC = () => {
 
   const startExam = async () => {
     try {
-      const res = await fetch(`/api/questions?paper_type=${paperType}`, {
+      const res = await fetch(`${API_BASE}/api/questions?paper_type=${paperType}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(`Questions request failed: ${res.status}`);
@@ -78,7 +79,7 @@ export const MockExam: React.FC = () => {
     }));
 
     try {
-      const res = await fetch('/api/attempts/mock-submit', {
+      const res = await fetch(`${API_BASE}/api/attempts/mock-submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { Question, AttemptResult, PaperType } from '../types';
+import { API_BASE } from '../config';
 import { 
   CheckCircle2, XCircle, HelpCircle, ArrowRight, 
   RotateCcw, Sparkles, FileText, Award, Layers, BookOpen 
@@ -38,7 +39,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
     setResult(null);
     setUserAnswers({});
     try {
-      let url = `/api/questions?paper_type=${paperType}`;
+      let url = `${API_BASE}/api/questions?paper_type=${paperType}`;
       if (initialTopic) url += `&topic=${encodeURIComponent(initialTopic)}`;
       
       const res = await fetch(url, {
@@ -72,7 +73,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
 
     setIsSubmitting(true);
     try {
-      const res = await fetch('/api/attempts/submit', {
+      const res = await fetch(`${API_BASE}/api/attempts/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ async function validateWhopAccess(licenseKey) {
   const WHOP_API_KEY = process.env.WHOP_API_KEY;
   const WHOP_PRODUCT_ID = process.env.WHOP_PRODUCT_ID;
   const WHOP_PLAN_ID = process.env.WHOP_PLAN_ID;
-  const MASTER_KEY = process.env.MASTER_KEY || 'SA-ACC-MASTER-2026';
+  const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
 
   if (!licenseKey || typeof licenseKey !== 'string') {
     return { valid: false, status: 'missing_key', error: 'License key is required.' };

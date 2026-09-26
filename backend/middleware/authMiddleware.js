@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/database');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sa_accounting_super_secret_jwt_key_2026';
-const MASTER_KEY = process.env.MASTER_KEY || 'SA-ACC-MASTER-2026';
+const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
 
 /**
  * Express Middleware: Enforces valid JWT token AND active subscription status in database.
@@ -10,7 +10,7 @@ const MASTER_KEY = process.env.MASTER_KEY || 'SA-ACC-MASTER-2026';
  */
 function requireActiveAccess(req, res, next) {
   const authHeader = req.headers.authorization || '';
-  const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : (req.query.token || req.body?.token);
+  const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : (req.query?.token || req.body?.token);
 
   if (!token) {
     return res.status(401).json({ error: 'Authentication required. Please log in with a valid Whop license.' });

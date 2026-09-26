@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { ShieldCheck, Upload, Download, Plus, AlertTriangle, CheckCircle2, FileCode } from 'lucide-react';
+import { API_BASE } from '../config';
 
 export const AdminPanel: React.FC = () => {
   const { glassClass } = useTheme();
@@ -16,7 +17,7 @@ export const AdminPanel: React.FC = () => {
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/auth/master', {
+      const res = await fetch(`${API_BASE}/api/auth/master`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ masterKey: masterInput.trim() })
@@ -40,7 +41,7 @@ export const AdminPanel: React.FC = () => {
       const parsed = JSON.parse(jsonInput);
       const questionsArray = Array.isArray(parsed) ? parsed : parsed.questions ? parsed.questions : [parsed];
 
-      const res = await fetch('/api/admin/import', {
+      const res = await fetch(`${API_BASE}/api/admin/import`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ export const AdminPanel: React.FC = () => {
 
   const handleExport = async () => {
     try {
-      const res = await fetch('/api/admin/export', {
+      const res = await fetch(`${API_BASE}/api/admin/export`, {
         headers: {
           'x-master-key': masterInput.trim() || 'SA-ACC-MASTER-2026'
         }

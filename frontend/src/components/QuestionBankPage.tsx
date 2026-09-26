@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { Question, PaperType } from '../types';
 import { Database, Filter, Play, CheckCircle } from 'lucide-react';
+import { API_BASE } from '../config';
 
 interface QuestionBankProps {
   onSelectQuestion: (questionId: number) => void;
@@ -26,7 +27,7 @@ export const QuestionBankPage: React.FC<QuestionBankProps> = ({ onSelectQuestion
   const fetchQuestionBank = async () => {
     setLoading(true);
     try {
-      let url = `/api/questions?paper_type=${paperType}`;
+      let url = `${API_BASE}/api/questions?paper_type=${paperType}`;
       if (filterDifficulty !== 'all') url += `&difficulty=${filterDifficulty}`;
       if (filterExam !== 'all') url += `&exam_type=${filterExam}`;
 

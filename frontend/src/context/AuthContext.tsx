@@ -71,7 +71,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       return true;
     } catch (err: any) {
-      setError('Connection failed. Please verify server status.');
+      console.error('Login error:', err);
+      setError(`Connection failed: ${err.message || 'Please verify server status.'}`);
       return false;
     }
   };

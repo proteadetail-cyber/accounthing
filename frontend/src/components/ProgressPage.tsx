@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar, CartesianGrid } from 'recharts';
 import { LineChart, Trophy, Target, Award, Layers } from 'lucide-react';
+import { API_BASE } from '../config';
 
 export const ProgressPage: React.FC = () => {
   const { paperType, glassClass, accentColor } = useTheme();
@@ -20,7 +21,7 @@ export const ProgressPage: React.FC = () => {
   const fetchProgressData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
+      const res = await fetch(`${API_BASE}/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(`Progress stats request failed: ${res.status}`);

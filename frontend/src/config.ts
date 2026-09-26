@@ -1,4 +1,10 @@
 // Central API configuration
-// In development, Vite proxy handles /api → localhost:5001
-// In production (GitHub Pages), this points to the Render backend URL
-export const API_BASE = (import.meta as any).env?.VITE_BACKEND_URL || '';
+// If hosted directly on the same domain as the backend (like on Render), use empty string (relative URL)
+// Otherwise (e.g. GitHub Pages or separate frontend host), point to https://accounthing.onrender.com
+export const API_BASE = (import.meta as any).env?.VITE_BACKEND_URL !== undefined 
+  ? (import.meta as any).env?.VITE_BACKEND_URL 
+  : (typeof window !== 'undefined' && window.location.hostname.includes('render.com') 
+      ? '' 
+      : 'https://accounthing.onrender.com');
+
+

@@ -8,6 +8,7 @@ import {
   TrendingUp, CheckCircle2, XCircle, Award, 
   Target, AlertTriangle, Play, Clock, ArrowRight, BookOpen, Activity 
 } from 'lucide-react';
+import { API_BASE } from '../config';
 
 interface DashboardProps {
   onStartPractice: (paper: PaperType, topic?: string, mode?: string) => void;
@@ -28,7 +29,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPractice }) => {
   const fetchStats = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
+      const res = await fetch(`${API_BASE}/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(`Dashboard stats request failed: ${res.status}`);
