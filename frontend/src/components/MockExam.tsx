@@ -348,17 +348,17 @@ export const MockExam: React.FC = () => {
 
                 return (
                   <div className="space-y-3 pt-2">
-                    <div className="text-xs font-mono uppercase tracking-wider text-slate-950 font-extrabold flex items-center justify-between">
+                    <div className="text-xs font-mono tracking-wider text-slate-950 font-extrabold flex items-center justify-between">
                       <span>{title}</span>
                       <span className="text-[11px] text-slate-800 font-mono font-bold bg-slate-300 px-2 py-0.5 rounded">
-                        {language === 'af' ? 'ANTWOORDEBOEK TEMPLAAT' : 'ANSWER BOOK TEMPLATE'}
+                        {language === 'af' ? 'Antwoordeboek Templaat' : 'Answer Book Template'}
                       </span>
                     </div>
 
                     <div className="overflow-x-auto rounded-2xl border-2 border-slate-900 bg-[#EBE7DF] shadow-md">
                       <table className="w-full text-left border-collapse font-sans text-xs sm:text-sm">
                         <thead>
-                          <tr className="bg-slate-950 text-white font-mono uppercase tracking-wider">
+                          <tr className="bg-slate-950 text-white font-mono tracking-wider">
                             {cols.map((col: string, idx: number) => (
                               <th key={idx} className="p-3 border-r border-slate-800 last:border-r-0 font-extrabold">
                                 {col}
@@ -372,7 +372,7 @@ export const MockExam: React.FC = () => {
                             if (row.isHeader) {
                               return (
                                 <tr key={row.id || rIdx} className="bg-slate-300/80 font-bold border-b border-slate-400">
-                                  <td colSpan={cols.length} className="p-2.5 font-extrabold uppercase text-slate-950 text-xs">
+                                  <td colSpan={cols.length} className="p-2.5 font-extrabold text-slate-950 text-xs">
                                     {rowLabel}
                                   </td>
                                 </tr>
@@ -474,8 +474,8 @@ export const MockExam: React.FC = () => {
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-mono font-extrabold text-cyan-900 bg-cyan-100 px-2.5 py-0.5 rounded border border-cyan-300 uppercase">
-                            {language === 'af' ? `BEWERKINGS / BEREKENINGSBLOK (~${field.marks}cm VIR ${field.marks} PUNTE)` : `WORKING / CALCULATION BLOCK (~${field.marks}cm FOR ${field.marks} MARKS)`}
+                          <span className="text-[11px] font-mono font-extrabold text-cyan-900 bg-cyan-100 px-2.5 py-0.5 rounded border border-cyan-300">
+                            {language === 'af' ? `Bewerkings- / berekeningsblok (~${field.marks}cm vir ${field.marks} punte)` : `Working / calculation block (~${field.marks}cm for ${field.marks} marks)`}
                           </span>
                           <span className="text-xs font-mono text-slate-950 font-extrabold">
                             [{field.marks}m]

@@ -100,12 +100,12 @@ Aanpassings: 1. Huur vooruit ontvang R12 000. 2. Onbetaalde ouditeursgelde R6 00
     rows: [
       { id: 'sales', label_en: 'Sales', label_af: 'Verkope', fields: [{ field_name: 'sales' }] },
       { id: 'cos', label_en: 'Cost of Sales', label_af: 'Koste van verkope', fields: [{ field_name: 'cos' }] },
-      { id: 'gp', label_en: 'GROSS PROFIT', label_af: 'BRUTO WINS', fields: [{ field_name: 'gross_profit' }] },
+      { id: 'gp', label_en: 'Gross Profit', label_af: 'Bruto Wins', fields: [{ field_name: 'gross_profit' }] },
       { id: 'rent', label_en: 'Rent Income (adjusted)', label_af: 'Huurinkomste (aangepas)', fields: [{ field_name: 'rent_income' }] },
       { id: 'directors', label_en: "Directors' Fees", label_af: 'Direkteursgelde', fields: [{ field_name: 'directors_fees' }] },
       { id: 'audit', label_en: 'Audit Fees (incl. unpaid)', label_af: 'Ouditeursgelde (insluitend onbetaald)', fields: [{ field_name: 'audit_fees' }] },
       { id: 'depn', label_en: 'Depreciation on Vehicles', label_af: 'Waardevermindering op Voertuie', fields: [{ field_name: 'depreciation' }] },
-      { id: 'op_profit', label_en: 'OPERATING PROFIT', label_af: 'BEDRYFSWINS', fields: [{ field_name: 'operating_profit' }] }
+      { id: 'op_profit', label_en: 'Operating Profit', label_af: 'Bedryfswins', fields: [{ field_name: 'operating_profit' }] }
     ]
   },
   total_marks: 60,
@@ -144,7 +144,7 @@ Retensiekos Begin: R420 000. Netto Wins na belasting: R850 000. Aandele terugkoo
       { id: 'repurchased', label_en: 'Repurchase premium', label_af: 'Terugkoop premie', fields: [{ field_name: 'repurchased' }] },
       { id: 'div_interim', label_en: 'Interim Dividends', label_af: 'Tussentydse Dividende', fields: [{ field_name: 'div_interim' }] },
       { id: 'div_final', label_en: 'Final Dividends', label_af: 'Finale Dividende', fields: [{ field_name: 'div_final' }] },
-      { id: 'end', label_en: 'BALANCE AT END OF YEAR', label_af: 'SALDO AAN EINDE VAN JAAR', fields: [{ field_name: 'ret_end' }] }
+      { id: 'end', label_en: 'Balance at End of Year', label_af: 'Saldo aan Einde van Jaar', fields: [{ field_name: 'ret_end' }] }
     ]
   },
   total_marks: 35,
@@ -257,7 +257,7 @@ Inkomstebelasting Koers: 27%`,
       { id: 'opex', label_en: 'Operating Expenses', label_af: 'Bedryfsuitgawes', fields: [{ field_name: 'operating_expenses' }] },
       { id: 'op_profit', label_en: 'Operating Profit', label_af: 'Bedryfswins', fields: [{ field_name: 'operating_profit' }] },
       { id: 'tax', label_en: 'Income Tax (27%)', label_af: 'Inkomstebelasting (27%)', fields: [{ field_name: 'income_tax' }] },
-      { id: 'net_profit', label_en: 'NET PROFIT AFTER TAX', label_af: 'NETTO WINS NA BELASTING', fields: [{ field_name: 'net_profit_after_tax' }] }
+      { id: 'net_profit', label_en: 'Net Profit after Tax', label_af: 'Netto Wins na Belasting', fields: [{ field_name: 'net_profit_after_tax' }] }
     ]
   },
   total_marks: 60,
@@ -293,7 +293,7 @@ Uitreikings Aandelekapitaal begin: 1 000 000 aandele @ R5,00 = R5 000 000. 200 0
       { id: 'start', label_en: 'Balance at start of year', label_af: 'Saldo aan begin van jaar', fields: [{ field_name: 'share_start' }] },
       { id: 'issued', label_en: '200 000 shares issued @ R6,50', label_af: '200 000 aandele uitgereik @ R6,50', fields: [{ field_name: 'shares_issued' }] },
       { id: 'repurchased', label_en: '50 000 shares repurchased @ R5,25 avg', label_af: '50 000 aandele teruggekoop @ R5,25 gem', fields: [{ field_name: 'shares_repurchased' }] },
-      { id: 'end', label_en: 'BALANCE AT END OF YEAR', label_af: 'SALDO AAN EINDE VAN JAAR', fields: [{ field_name: 'share_end' }] }
+      { id: 'end', label_en: 'Balance at End of Year', label_af: 'Saldo aan Einde van Jaar', fields: [{ field_name: 'share_end' }] }
     ]
   },
   total_marks: 35,
@@ -402,12 +402,12 @@ Opgeloopte Bankoortrekking: R150 000`,
     rows: [
       { id: 'share_cap', label_en: 'Share Capital', label_af: 'Aandelekapitaal', fields: [{ field_name: 'share_capital' }] },
       { id: 'retained', label_en: 'Retained Income', label_af: 'Retensiekos', fields: [{ field_name: 'retained_income' }] },
-      { id: 'equity', label_en: 'TOTAL SHAREHOLDERS EQUITY', label_af: 'TOTALE EIEWAARDE', fields: [{ field_name: 'total_equity' }] },
-      { id: 'non_curr', label_en: 'NON-CURRENT LIABILITIES (Long-term Loan)', label_af: 'NIE-BEDRYFSLASTE (Langtermyn Lening)', fields: [{ field_name: 'non_current_liabilities' }] },
+      { id: 'equity', label_en: 'Total Shareholders Equity', label_af: 'Totale Eiewaarde', fields: [{ field_name: 'total_equity' }] },
+      { id: 'non_curr', label_en: 'NON-Current Liabilities (Long-term Loan)', label_af: 'NIE-Bedryfslaste (Langtermyn Lening)', fields: [{ field_name: 'non_current_liabilities' }] },
       { id: 'trade_pay', label_en: 'Trade Payables', label_af: 'Handelskrediteure', fields: [{ field_name: 'trade_payables' }] },
       { id: 'overdraft', label_en: 'Bank Overdraft', label_af: 'Bankoortrekking', fields: [{ field_name: 'bank_overdraft' }] },
-      { id: 'curr', label_en: 'CURRENT LIABILITIES', label_af: 'BEDRYFSLASTE', fields: [{ field_name: 'current_liabilities' }] },
-      { id: 'total_el', label_en: 'TOTAL EQUITY AND LIABILITIES', label_af: 'TOTALE EIEWAARDE EN LASTE', fields: [{ field_name: 'total_equity_liabilities' }] }
+      { id: 'curr', label_en: 'Current Liabilities', label_af: 'Bedryfslaste', fields: [{ field_name: 'current_liabilities' }] },
+      { id: 'total_el', label_en: 'Total Equity and Liabilities', label_af: 'Totale Eiewaarde EN LASTE', fields: [{ field_name: 'total_equity_liabilities' }] }
     ]
   },
   total_marks: 60,
@@ -451,7 +451,7 @@ Aandeelhouers vir Dividende: R50 000`,
       { id: 'accrued', label_en: 'Accrued Expenses', label_af: 'Opgeloopte Uitgawes', fields: [{ field_name: 'accrued_expenses' }] },
       { id: 'tax_pay', label_en: 'SARS Income Tax', label_af: 'SARS Inkomstebelasting', fields: [{ field_name: 'sars_tax' }] },
       { id: 'div_pay', label_en: 'Shareholders for Dividends', label_af: 'Aandeelhouers vir Dividende', fields: [{ field_name: 'shareholders_div' }] },
-      { id: 'total_payables', label_en: 'TOTAL TRADE & OTHER PAYABLES', label_af: 'TOTALE HANDELS- EN ANDER LASTE', fields: [{ field_name: 'total_payables' }] }
+      { id: 'total_payables', label_en: 'Total Trade & Other Payables', label_af: 'Totale Handels- en Ander Laste', fields: [{ field_name: 'total_payables' }] }
     ]
   },
   total_marks: 35,
@@ -562,7 +562,7 @@ Oninvorderbare Skulde afgeskryf: R8 000`,
       { id: 'stock_def', label_en: 'Trading Stock Deficit', label_af: 'Handelsvoorraadtekort', fields: [{ field_name: 'stock_deficit' }] },
       { id: 'bad_debts', label_en: 'Bad Debts Written Off', label_af: 'Oninvorderbare Skulde Afgeskryf', fields: [{ field_name: 'bad_debts' }] },
       { id: 'op_exp', label_en: 'Total Operating Expenses (Adjusted)', label_af: 'Totale Bedryfsuitgawes (Aangepas)', fields: [{ field_name: 'total_op_exp' }] },
-      { id: 'op_profit', label_en: 'OPERATING PROFIT', label_af: 'BEDRYFSWINS', fields: [{ field_name: 'operating_profit' }] }
+      { id: 'op_profit', label_en: 'Operating Profit', label_af: 'Bedryfswins', fields: [{ field_name: 'operating_profit' }] }
     ]
   },
   total_marks: 60,
@@ -844,12 +844,12 @@ INLIGTING D: WERK-IN-VORDERING & PRODUKSIE
     rows: [
       { id: 'dmc', label_en: 'Direct Material Cost Consumed (120k + 780k + 35k - 15k - 140k)', label_af: 'Direkte Materiaalkoste Verbruik (120k + 780k + 35k - 15k - 140k)', fields: [{ field_name: 'dm_consumed' }] },
       { id: 'dlc', label_en: 'Direct Labour Cost (Basic wages + Overtime + 10% Contributions)', label_af: 'Direkte Arbeidskoste (Basiese lone + Oortyd + 10% Bydraes)', fields: [{ field_name: 'dl_cost' }] },
-      { id: 'prime', isTotalRow: true, label_en: 'PRIME COST', label_af: 'PRIMÊRE KOSTE', fields: [{ field_name: 'prime_cost' }] },
+      { id: 'prime', isTotalRow: true, label_en: 'Prime Cost', label_af: 'Primêre Koste', fields: [{ field_name: 'prime_cost' }] },
       { id: 'foh', label_en: 'Factory Overhead Cost (Rent 80% + Indirect Mat + Water/Elec 75% + Deprec)', label_af: 'Fabrieksbokoste (Huur 80% + Indirek Mat + Water/Elek 75% + Waardeverm)', fields: [{ field_name: 'foh_cost' }] },
-      { id: 'tot_prod', isTotalRow: true, label_en: 'TOTAL COST OF PRODUCTION', label_af: 'TOTALE PRODUKSIEKOSTE', fields: [{ field_name: 'total_production_cost' }] },
+      { id: 'tot_prod', isTotalRow: true, label_en: 'Total Cost of Production', label_af: 'Totale Produksiekoste', fields: [{ field_name: 'total_production_cost' }] },
       { id: 'wip_open', label_en: 'Add: Work-in-progress at beginning (1 March 2025)', label_af: 'Tel by: Werk-in-vordering aan begin (1 Maart 2025)', fields: [{ readOnly: true, staticValue: '75 000' }] },
       { id: 'wip_close', label_en: 'Less: Work-in-progress at end (28 February 2026)', label_af: 'Trek af: Werk-in-vordering aan einde (28 Februarie 2026)', fields: [{ readOnly: true, staticValue: '(93 450)' }] },
-      { id: 'fg_cost', isTotalRow: true, label_en: 'COST OF FINISHED GOODS PRODUCED', label_af: 'KOSTE VAN VOLTOOIDE GOEDERE GEPRODUSEER', fields: [{ field_name: 'finished_goods_cost' }] },
+      { id: 'fg_cost', isTotalRow: true, label_en: 'Cost of Finished Goods Produced', label_af: 'Koste van Voltooide Goedere Geproduseer', fields: [{ field_name: 'finished_goods_cost' }] },
       { id: 'uc', label_en: 'Unit Cost of Production per finished unit (R per unit)', label_af: 'Eenheidskoste van Produksie per voltooide eenheid (R per eenheid)', fields: [{ field_name: 'unit_cost' }] }
     ]
   },
@@ -921,7 +921,7 @@ INLIGTING B: VERKOPE & FISIESE VOORRAADTELLING
       { id: 'def_val', label_en: 'Value of Stock Deficit written off (15 units from Jan batch @ R515 cost)', label_af: 'Waarde van Voorraadtekort afgeskryf (15 eenhede uit Jan-besending @ R515)', fields: [{ readOnly: true, staticValue: '15 units @ R515' }, { field_name: 'deficit_value' }] },
       { id: 'close_val', isTotalRow: true, label_en: 'VALUE OF CLOSING STOCK UNDER FIFO (200 @ R560 + 45 @ R515)', label_af: 'WAARDE VAN EINDVOORRAAD ONDER FIFO (200 @ R560 + 45 @ R515)', fields: [{ readOnly: true, staticValue: '245 units' }, { field_name: 'closing_stock_fifo' }] },
       { id: 'cos_fifo', isTotalRow: true, label_en: 'COST OF SALES (Total Available R538 350 - Closing Stock R135 175 - Deficit R7 725)', label_af: 'KOSTE VAN VERKOPE (Beskikbaar R538 350 - Eindvoorraad R135 175 - Tekort R7 725)', fields: [{ readOnly: true, staticValue: '820 units sold' }, { field_name: 'cost_of_sales_fifo' }] },
-      { id: 'gp_fifo', isTotalRow: true, label_en: 'GROSS PROFIT ACHIEVED (Sales R697 000 - Cost of Sales R395 450)', label_af: 'BRUTO WINS BEHAAL (Verkope R697 000 - Koste van Verkope R395 450)', fields: [{ readOnly: true, staticValue: 'Margin: 43.26%' }, { field_name: 'gross_profit' }] }
+      { id: 'gp_fifo', isTotalRow: true, label_en: 'Gross Profit ACHIEVED (Sales R697 000 - Cost of Sales R395 450)', label_af: 'Bruto Wins BEHAAL (Verkope R697 000 - Koste van Verkope R395 450)', fields: [{ readOnly: true, staticValue: 'Margin: 43.26%' }, { field_name: 'gross_profit' }] }
     ]
   },
   total_marks: 35,
@@ -997,7 +997,7 @@ INLIGTING B: BTW INLIGTING VIR OKTOBER 2026 (BTW KOERS 15%)
       { isHeader: true, label_en: 'SECTION 1: CASH RECEIPTS BUDGET FOR OCTOBER 2026', label_af: 'AFDELING 1: KONTANTONTVANGSTE BEGROTING VIR OKTOBER 2026' },
       { id: 'cs_oct', label_en: 'Budgeted Cash Sales for October (25% of R500 000)', label_af: 'Gebegrote Kontantverkope vir Oktober (25% van R500 000)', fields: [{ readOnly: true, staticValue: '500 000 * 25%' }, { field_name: 'oct_cash_sales' }] },
       { id: 'dc_oct', label_en: 'Cash Collected from Debtors in October (Oct 50%-5% + Sep 35% + Aug 12%)', label_af: 'Kontant van Debiteure ingevorder in Oktober (Okt 50%-5% + Sep 35% + Aug 12%)', fields: [{ readOnly: true, staticValue: '178 125 + 118 125 + 36 000' }, { field_name: 'oct_debtors_collected' }] },
-      { id: 'tot_rec_oct', isTotalRow: true, label_en: 'TOTAL BUDGETED CASH RECEIPTS IN OCTOBER', label_af: 'TOTALE GEBEGROTE KONTANTONTVANGSTE IN OKTOBER', fields: [{ readOnly: true, staticValue: 'Cash Sales + Debtors' }, { field_name: 'oct_total_receipts' }] },
+      { id: 'tot_rec_oct', isTotalRow: true, label_en: 'Total Budgeted Cash Receipts in October', label_af: 'Totale Gebergrote Kontantontvangste in Oktober', fields: [{ readOnly: true, staticValue: 'Cash Sales + Debtors' }, { field_name: 'oct_total_receipts' }] },
       { isHeader: true, label_en: 'SECTION 2: SARS VAT RETURN CALCULATION FOR OCTOBER 2026', label_af: 'AFDELING 2: SARS BTW-OPGAWE BEREKENING VIR OKTOBER 2026' },
       { id: 'out_vat', label_en: 'Output VAT on October Sales (15% on R500 000)', label_af: 'Uitset BTW op Oktober-verkope (15% op R500 000)', fields: [{ readOnly: true, staticValue: '500 000 * 15%' }, { field_name: 'output_vat_oct' }] },
       { id: 'inp_vat', label_en: 'Total Input VAT Claimable (Purchases R42k + Capital Vehicle R48k)', label_af: 'Totale Inset BTW Eisbaar (Aankope R42k + Kapitaalvoertuig R48k)', fields: [{ readOnly: true, staticValue: '42 000 + (320 000 * 15%)' }, { field_name: 'input_vat_oct' }] },
@@ -1070,7 +1070,7 @@ INLIGTING B: VERSKILLE ONTDEK TYDENS ONDERSOEK
       { id: 'eft_pay', label_en: '4. EFT Payment of 30 September not yet cleared on statement', label_af: '4. EFT-betaling van 30 September nie op staat geklaar nie', fields: [{ readOnly: true, staticValue: '-' }, { field_name: 'eft_payment_stmt' }] },
       { id: 'int_can', label_en: '5. Disputed overdue interest cancelled by Apex Ltd', label_af: '5. Betwiste agterstallige rente gekanselleer deur Apex Bpk', fields: [{ readOnly: true, staticValue: '-' }, { field_name: 'disputed_interest' }] },
       { id: 'axis_err', label_en: '6. Error: Invoice from Axis Ltd incorrectly posted to Apex Ltd', label_af: '6. Fout: Faktuur van Axis Bpk foutiewelik gepos na Apex Bpk', fields: [{ field_name: 'wrong_supplier_inv' }, { readOnly: true, staticValue: '-' }] },
-      { id: 'corr_bal', isTotalRow: true, label_en: 'CORRECTED RECONCILED EQUAL BALANCE (R81 550)', label_af: 'GEKORRIGEERDE GELYKE VERSOENDE SALDO (R81 550)', fields: [{ field_name: 'corrected_ledger_bal' }, { field_name: 'reconciled_stmt_bal' }] }
+      { id: 'corr_bal', isTotalRow: true, label_en: 'Corrected Reconciled Equal Balance (R81 550)', label_af: 'Gekorrigeerde Gelyke Versoende Saldo (R81 550)', fields: [{ field_name: 'corrected_ledger_bal' }, { field_name: 'reconciled_stmt_bal' }] }
     ]
   },
   total_marks: 35,
@@ -1141,7 +1141,7 @@ INLIGTING B: WERソーLIKE BEDRYFSRESULTATE
       { id: 'bep_units', isTotalRow: true, label_en: 'BREAK-EVEN POINT IN UNITS (Total Fixed Costs / Unit Contribution)', label_af: 'GELYKBREEKPUNT IN EENHEDE (Totale Vaste Koste / Bydrae per Eenheid)', fields: [{ readOnly: true, staticValue: '935 000 / 550' }, { field_name: 'break_even_units' }] },
       { id: 'bep_val', label_en: 'Break-Even Sales Revenue Value (BEP Units * Selling Price R1 400)', label_af: 'Gelykbreek Verkoopsinkomste Waarde (Gelykbreek Eenhede * R1 400)', fields: [{ readOnly: true, staticValue: '1 700 * 1 400' }, { field_name: 'break_even_value' }] },
       { id: 'mos_units', isTotalRow: true, label_en: 'MARGIN OF SAFETY IN UNITS (Actual Units Sold 2 200 - Break-Even 1 700)', label_af: 'VEILIGHEIDSGRENS IN EENHEDE (Werklik 2 200 - Gelykbreek 1 700)', fields: [{ readOnly: true, staticValue: '2 200 - 1 700' }, { field_name: 'margin_safety_units' }] },
-      { id: 'net_profit', isTotalRow: true, label_en: 'TOTAL NET OPERATING PROFIT ACHIEVED FOR YEAR', label_af: 'TOTALE NETTO BEDRYFSWINS BEHAAL VIR DIE JAAR', fields: [{ readOnly: true, staticValue: '(2 200 * 550) - 935 000' }, { field_name: 'net_profit_achieved' }] }
+      { id: 'net_profit', isTotalRow: true, label_en: 'TOTAL NET Operating Profit ACHIEVED FOR YEAR', label_af: 'TOTALE NETTO Bedryfswins BEHAAL VIR DIE JAAR', fields: [{ readOnly: true, staticValue: '(2 200 * 550) - 935 000' }, { field_name: 'net_profit_achieved' }] }
     ]
   },
   total_marks: 45,
@@ -1208,7 +1208,7 @@ INLIGTING B: VERKOPE & EINDVOORRAAD
       { id: 'w_avg_cost', isTotalRow: true, label_en: 'WEIGHTED AVERAGE COST PER UNIT (R per unit)', label_af: 'GEWEEGDE GEMIDDELDE KOSTE PER EENHEID (R per eenheid)', fields: [{ readOnly: true, staticValue: '4 840 000 / 940 units' }, { field_name: 'weighted_avg_unit_cost' }] },
       { id: 'w_close_val', isTotalRow: true, label_en: 'VALUE OF CLOSING INVENTORY (180 units @ Weighted Average Cost)', label_af: 'WAARDE VAN EINDVOORRAAD (180 eenhede @ Geweegde Gemiddeld)', fields: [{ readOnly: true, staticValue: '180 * R5 148,936' }, { field_name: 'weighted_closing_stock' }] },
       { id: 'w_cos', label_en: 'Cost of Sales (Total Stock Cost R4 840 000 - Closing Inventory)', label_af: 'Koste van Verkope (Totale Voorraadkoste R4 840 000 - Eindvoorraad)', fields: [{ readOnly: true, staticValue: '4 840 000 - 926 808' }, { field_name: 'cost_of_sales_wavg' }] },
-      { id: 'w_gp', isTotalRow: true, label_en: 'GROSS PROFIT REALISED ON SALES (Sales R5 472 000 - Cost of Sales)', label_af: 'BRUTO WINS GEREALISEER OP VERKOPE (Verkope R5 472 000 - KVK)', fields: [{ readOnly: true, staticValue: '5 472 000 - 3 913 192' }, { field_name: 'gross_profit_wavg' }] }
+      { id: 'w_gp', isTotalRow: true, label_en: 'Gross Profit REALISED ON SALES (Sales R5 472 000 - Cost of Sales)', label_af: 'Bruto Wins GEREALISEER OP VERKOPE (Verkope R5 472 000 - KVK)', fields: [{ readOnly: true, staticValue: '5 472 000 - 3 913 192' }, { field_name: 'gross_profit_wavg' }] }
     ]
   },
   total_marks: 35,
@@ -1277,7 +1277,7 @@ Krediteure word volgens die volgende skedule betaal:
       { id: 'mar_cp', label_en: 'March 2026 Credit Purchases (80% of R280 000)', label_af: 'Maart 2026 Kredietaankope (80% van R280 000)', fields: [{ field_name: 'march_credit_purchases' }, { readOnly: true, staticValue: '-' }] },
       { id: 'may_pay_apr', label_en: 'Payment to Creditors for April Purchases (40% less 4% discount)', label_af: 'Betaling aan Krediteure vir April-aankope (40% minus 4% korting)', fields: [{ readOnly: true, staticValue: '(240 000 * 40%) - 4%' }, { field_name: 'may_payment_april_creditors' }] },
       { id: 'may_pay_mar', label_en: 'Payment to Creditors for March Purchases (55% net)', label_af: 'Betaling aan Krediteure vir Maart-aankope (55% netto)', fields: [{ readOnly: true, staticValue: '224 000 * 55%' }, { field_name: 'may_payment_march_creditors' }] },
-      { id: 'tot_cred_may', isTotalRow: true, label_en: 'TOTAL PAYMENTS TO CREDITORS IN MAY 2026', label_af: 'TOTALE BETALINGS AAN KREDITEURE IN MEI 2026', fields: [{ readOnly: true, staticValue: 'April + March' }, { field_name: 'total_may_creditors_paid' }] },
+      { id: 'tot_cred_may', isTotalRow: true, label_en: 'Total Payments to Creditors in May 2026', label_af: 'Totale Betalings aan Krediteure in Mei 2026', fields: [{ readOnly: true, staticValue: 'April + March' }, { field_name: 'total_may_creditors_paid' }] },
       { id: 'may_cash_pur', isTotalRow: true, label_en: 'MAY CASH PURCHASES OF MERCHANDISE (20% of R340k less 5% discount)', label_af: 'MEI KONTANTAANKOPE VAN VOORRAAD (20% van R340k minus 5% afslag)', fields: [{ readOnly: true, staticValue: '68 000 - 5%' }, { field_name: 'may_cash_purchases_paid' }] }
     ]
   },
@@ -1403,7 +1403,7 @@ INFORMATION A: FACTORY OVERHEAD EXPENSES & APPORTIONMENT
 • Indirect labour: Foremen salaries R145 000, Factory cleaning and maintenance staff R62 000.
 • Depreciation on factory machinery: R54 800
 
-INFORMATION B: PRIME COST & PRODUCTION OUTPUT
+INFORMATION B: Prime Cost & PRODUCTION OUTPUT
 • Direct Material Cost Consumed: R840 000
 • Direct Labour Cost: R680 000
 • Work-in-progress on 1 June 2025: R95 000
@@ -1425,7 +1425,7 @@ INLIGTING A: FABRIEKSBOKOSTE UITGAWES & TOEWYSEDING
 • Indirekte arbeid: Voorman salarisse R145 000, Fabriekskoonmaak en instandhouding R62 000.
 • Waardevermindering op fabrieksmasjinerie: R54 800
 
-INLIGTING B: PRIMÊRE KOSTE & PRODUKSIE
+INLIGTING B: Primêre Koste & PRODUKSIE
 • Direkte Materiaalkoste Verbruik: R840 000
 • Direkte Arbeidskoste: R680 000
 • Werk-in-vordering op 1 Junie 2025: R95 000
@@ -1443,8 +1443,8 @@ INLIGTING B: PRIMÊRE KOSTE & PRODUKSIE
       { id: 'foh_rent', label_en: 'Factory Rent expense (70% floor space share of R180 000)', label_af: 'Fabriekshuur (70% vloeroppervlak van R180 000)', fields: [{ readOnly: true, staticValue: '180 000 * 70%' }, { field_name: 'factory_rent_share' }] },
       { id: 'foh_tot', isTotalRow: true, label_en: 'TOTAL FACTORY OVERHEAD COST (Mat + Lab + Rent + Insur 67.2k + Elec 72k + Depr 54.8k)', label_af: 'TOTALE FABRIEKSBOKOSTE (Mat + Arb + Huur + Vers 67.2k + Krag 72k + Waardev 54.8k)', fields: [{ readOnly: true, staticValue: 'Overhead Total' }, { field_name: 'total_foh_calculated' }] },
       { isHeader: true, label_en: 'SECTION 2: PRODUCTION COST & UNIT COST', label_af: 'AFDELING 2: PRODUKSIEKOSTE & EENHEIDSKOSTE' },
-      { id: 'prime_aloe', isTotalRow: true, label_en: 'PRIME COST (Direct Materials R840k + Direct Labour R680k)', label_af: 'PRIMÊRE KOSTE (Direkte Materiaal R840k + Direkte Arbeid R680k)', fields: [{ readOnly: true, staticValue: '840 000 + 680 000' }, { field_name: 'prime_cost_aloe' }] },
-      { id: 'tot_prod_aloe', isTotalRow: true, label_en: 'TOTAL COST OF PRODUCTION (Prime Cost + Factory Overheads)', label_af: 'TOTALE PRODUKSIEKOSTE (Primêre Koste + Fabrieksbokoste)', fields: [{ readOnly: true, staticValue: '1 520 000 + 597 500' }, { field_name: 'total_cost_production' }] },
+      { id: 'prime_aloe', isTotalRow: true, label_en: 'Prime Cost (Direct Materials R840k + Direct Labour R680k)', label_af: 'Primêre Koste (Direkte Materiaal R840k + Direkte Arbeid R680k)', fields: [{ readOnly: true, staticValue: '840 000 + 680 000' }, { field_name: 'prime_cost_aloe' }] },
+      { id: 'tot_prod_aloe', isTotalRow: true, label_en: 'Total Cost of Production (Prime Cost + Factory Overheads)', label_af: 'Totale Produksiekoste (Primêre Koste + Fabrieksbokoste)', fields: [{ readOnly: true, staticValue: '1 520 000 + 597 500' }, { field_name: 'total_cost_production' }] },
       { id: 'unit_cost_aloe', isTotalRow: true, label_en: 'COST PER UNIT PRODUCED (Finished Goods R2 100 000 / 35 000 units)', label_af: 'KOSTE PER EENHEID GEPRODUSEER (Voltooide Goedere R2 100 000 / 35 000 eenhede)', fields: [{ readOnly: true, staticValue: '2 100 000 / 35 000' }, { field_name: 'cost_per_unit_aloe' }] }
     ]
   },
@@ -1502,7 +1502,7 @@ INLIGTING B: OUDIT ONDERSOEK & TRANSAKSIES ONTDEK
       { id: 'init_stock', label_en: 'Initial Trading Stock per General Ledger (Given: 160 laptops @ R8 000)', label_af: 'Aanvanklike Handelsvoorraad volgens Grootboek (Gegee: 160 @ R8 000)', fields: [{ readOnly: true, staticValue: '160 units' }, { readOnly: true, staticValue: '1 280 000' }] },
       { id: 'draw_adj', label_en: 'Deduct: Owner Drawings of trading stock (2 laptops @ R8 000 cost)', label_af: 'Trek af: Eienaarsontrekkings van handelsvoorraad (2 eenhede @ R8 000 koste)', fields: [{ readOnly: true, staticValue: '(2 units)' }, { field_name: 'owner_drawings_cost' }] },
       { id: 'unrec_sale', label_en: 'Deduct: Unrecorded credit sales of 30 June (3 laptops @ R8 000 cost)', label_af: 'Trek af: Onaangetekende kredietverkope van 30 Junie (3 eenhede @ R8 000 koste)', fields: [{ readOnly: true, staticValue: '(3 units)' }, { field_name: 'unrecorded_sales_cost' }] },
-      { id: 'adj_book_q', isTotalRow: true, label_en: 'ADJUSTED BOOK STOCK QUANTITY (160 - 2 drawings - 3 sales)', label_af: 'AANGEPASTE BOEKVOORRAAD HOEVEELHEID (160 - 2 - 3)', fields: [{ field_name: 'adjusted_book_units' }, { readOnly: true, staticValue: 'R1 240 000' }] },
+      { id: 'adj_book_q', isTotalRow: true, label_en: 'Adjusted Book Stock Quantity (160 - 2 drawings - 3 sales)', label_af: 'Aangepaste Boekvoorraad Hoeveelheid (160 - 2 - 3)', fields: [{ field_name: 'adjusted_book_units' }, { readOnly: true, staticValue: 'R1 240 000' }] },
       { id: 'theft_units', isTotalRow: true, label_en: 'UNEXPLAINED STOCK THEFT / DEFICIT (155 adjusted - 148 physical count)', label_af: 'ONVERKLAARDE VOORRAADDIEFSTAL / TEKORT (155 aangepas - 148 fisies)', fields: [{ field_name: 'unexplained_theft_units' }, { field_name: 'stock_theft_value' }] },
       { id: 'bs_stock_val', isTotalRow: true, label_en: 'FINAL BALANCE SHEET VALUE OF TRADING STOCK (148 units @ R8 000)', label_af: 'FINALE BALANSSTAAT WAARDE VAN HANDELSVOORRAAD (148 eenhede @ R8 000)', fields: [{ readOnly: true, staticValue: '148 units' }, { field_name: 'balance_sheet_stock_val' }] }
     ]
@@ -1564,7 +1564,7 @@ INLIGTING B: TRANSAKSIES VIR MAART EN APRIL 2026 (ALLE BEDRAE SLUIT 15% BTW IN W
       { isHeader: true, label_en: 'SECTION 1: OUTPUT VAT (COLLECTED ON BEHALF OF SARS)', label_af: 'AFDELING 1: UITSET BTW (INGESAMEL VIR SARS)' },
       { id: 'out_sales', label_en: 'Output VAT on Sales (R966 000 * 15/115)', label_af: 'Uitset BTW op Verkope (R966 000 * 15/115)', fields: [{ readOnly: true, staticValue: '966 000 * 15/115' }, { field_name: 'output_vat_sales' }] },
       { id: 'out_draw', label_en: 'Output VAT on Owner Drawings of trading stock (R8 050 * 15/115)', label_af: 'Uitset BTW op Eienaarsonttrekkings (R8 050 * 15/115)', fields: [{ readOnly: true, staticValue: '8 050 * 15/115' }, { field_name: 'output_vat_drawings' }] },
-      { id: 'tot_out', isTotalRow: true, label_en: 'TOTAL OUTPUT VAT FOR THE TWO-MONTH PERIOD', label_af: 'TOTALE UITSET BTW VIR DIE TWEE-MAANDE TYDPERK', fields: [{ readOnly: true, staticValue: 'Sales + Drawings' }, { field_name: 'total_output_vat' }] },
+      { id: 'tot_out', isTotalRow: true, label_en: 'Total Output VAT for the Two-Month Period', label_af: 'Totale Uitset BTW vir die Twee-Maande Tydperk', fields: [{ readOnly: true, staticValue: 'Sales + Drawings' }, { field_name: 'total_output_vat' }] },
       { isHeader: true, label_en: 'SECTION 2: INPUT VAT (CLAIMABLE FROM SARS)', label_af: 'AFDELING 2: INSET BTW (EISBAAR VANAF SARS)' },
       { id: 'inp_pur', label_en: 'Input VAT on Merchandise Purchases (R529 000 * 15/115)', label_af: 'Inset BTW op Voorraadaankope (R529 000 * 15/115)', fields: [{ readOnly: true, staticValue: '529 000 * 15/115' }, { field_name: 'input_vat_purchases' }] },
       { id: 'inp_cap', label_en: 'Input VAT on Capital Packaging Machine (R230 000 * 15/115)', label_af: 'Inset BTW op Kapitaal Verpakkingsmasjien (R230 000 * 15/115)', fields: [{ readOnly: true, staticValue: '230 000 * 15/115' }, { field_name: 'input_vat_capital_equipment' }] },
@@ -1639,7 +1639,7 @@ INLIGTING B: EINDE VAN DIE JAAR AANPASSINGS OP 31 OKTOBER 2026
       { id: 'net_deb_ctrl', isTotalRow: true, label_en: 'FINAL ADJUSTED TRADE DEBTORS CONTROL (380k - 7.2k bad debt - 4.8k EFT - 15k Khumalo)', label_af: 'FINALE AANGEPASTE DEBITEUREBEHEER (380k - 7.2k - 4.8k - 15k)', fields: [{ readOnly: true, staticValue: '380k - 27k' }, { field_name: 'net_debtors_control' }] },
       { id: 'req_prov', label_en: 'Required Provision for Bad Debts (5% of Net Debtors R353 000)', label_af: 'Vereiste Voorsiening vir Oninbare Skulde (5% van R353 000)', fields: [{ readOnly: true, staticValue: '353 000 * 5%' }, { field_name: 'required_bad_debt_prov' }] },
       { id: 'prov_adj_inc', label_en: 'Increase in Provision for Bad Debts Adjustment (17 650 - 14 500)', label_af: 'Vermeerdering in Voorsiening vir Oninbare Skulde (17 650 - 14 500)', fields: [{ readOnly: true, staticValue: '17 650 - 14 500' }, { field_name: 'prov_adjustment_increase' }] },
-      { id: 'bs_net_deb', isTotalRow: true, label_en: 'NET TRADE DEBTORS SHOWN IN BALANCE SHEET (353 000 - 17 650)', label_af: 'NETTO HANDELSDEBITEURE GETOON IN BALANSSTAAT (353 000 - 17 650)', fields: [{ readOnly: true, staticValue: '353 000 - 17 650' }, { field_name: 'net_balance_sheet_debtors' }] }
+      { id: 'bs_net_deb', isTotalRow: true, label_en: 'Net Trade Debtors Shown in Balance Sheet (353 000 - 17 650)', label_af: 'Netto Handelsdebiteure Getoon in Balansstaat (353 000 - 17 650)', fields: [{ readOnly: true, staticValue: '353 000 - 17 650' }, { field_name: 'net_balance_sheet_debtors' }] }
     ]
   },
   total_marks: 35,
@@ -1718,10 +1718,10 @@ INLIGTING C: WERK-IN-VORDERING & VOLTOOIDE GOEDERE
     rows: [
       { id: 'dm_sp', label_en: 'Direct Material Cost Consumed (Given)', label_af: 'Direkte Materiaalkoste Verbruik (Gegee)', fields: [{ readOnly: true, staticValue: 'Direct Materials' }, { readOnly: true, staticValue: '1 080 000' }] },
       { id: 'dl_sp', label_en: 'Direct Labour Cost (Basic 1.2288m + Overtime 172.8k + 12.5% Contrib 153.6k)', label_af: 'Direkte Arbeidskoste (Basies 1.2288m + Oortyd 172.8k + Bydraes 153.6k)', fields: [{ readOnly: true, staticValue: '1 228 800 + 172 800 + 153 600' }, { field_name: 'direct_labour_total' }] },
-      { id: 'prime_sp', isTotalRow: true, label_en: 'PRIME COST (Direct Materials + Direct Labour)', label_af: 'PRIMÊRE KOSTE (Direkte Materiaal + Direkte Arbeid)', fields: [{ readOnly: true, staticValue: '1 080 000 + 1 555 200' }, { field_name: 'prime_cost_springbok' }] },
+      { id: 'prime_sp', isTotalRow: true, label_en: 'Prime Cost (Direct Materials + Direct Labour)', label_af: 'Primêre Koste (Direkte Materiaal + Direkte Arbeid)', fields: [{ readOnly: true, staticValue: '1 080 000 + 1 555 200' }, { field_name: 'prime_cost_springbok' }] },
       { id: 'foh_sp', label_en: 'Factory Overhead Cost (92k + 240k + 118k + 64k + 86k)', label_af: 'Fabrieksbokoste (92k + 240k + 118k + 64k + 86k)', fields: [{ readOnly: true, staticValue: 'Overheads Total' }, { field_name: 'factory_overheads_total' }] },
-      { id: 'tot_prod_sp', isTotalRow: true, label_en: 'TOTAL COST OF PRODUCTION', label_af: 'TOTALE PRODUKSIEKOSTE', fields: [{ readOnly: true, staticValue: '2 635 200 + 600 000' }, { field_name: 'total_production_cost' }] },
-      { id: 'fg_sp', isTotalRow: true, label_en: 'COST OF FINISHED GOODS PRODUCED (Total Prod 3.2352m + WIP 140k - WIP 175.2k)', label_af: 'KOSTE VAN VOLTOOIDE GOEDERE (3.2352m + 140k - 175.2k)', fields: [{ readOnly: true, staticValue: 'Finished Goods Total' }, { field_name: 'cost_finished_goods' }] },
+      { id: 'tot_prod_sp', isTotalRow: true, label_en: 'Total Cost of Production', label_af: 'Totale Produksiekoste', fields: [{ readOnly: true, staticValue: '2 635 200 + 600 000' }, { field_name: 'total_production_cost' }] },
+      { id: 'fg_sp', isTotalRow: true, label_en: 'Cost of Finished Goods Produced (Total Prod 3.2352m + WIP 140k - WIP 175.2k)', label_af: 'KOSTE VAN VOLTOOIDE GOEDERE (3.2352m + 140k - 175.2k)', fields: [{ readOnly: true, staticValue: 'Finished Goods Total' }, { field_name: 'cost_finished_goods' }] },
       { id: 'unit_c_sp', label_en: 'Actual Production Cost per Unit (R3 200 000 / 60 000 units)', label_af: 'Werklike Produksiekoste per Eenheid (R3 200 000 / 60 000 eenhede)', fields: [{ readOnly: true, staticValue: '3 200 000 / 60 000' }, { field_name: 'actual_unit_cost' }] },
       { id: 'var_sp', isTotalRow: true, label_en: 'FAVOURABLE UNIT COST VARIANCE (Target R55,00 - Actual Cost)', label_af: 'GUNSTIGE EENHEIDSKOSTE AFWYKING (Teiken R55,00 - Werklik)', fields: [{ readOnly: true, staticValue: '55.00 - 53.33' }, { field_name: 'unit_cost_variance' }] }
     ]
@@ -1780,8 +1780,8 @@ INLIGTING A: VOERTUIGVOORRAAD & VERKOOPREKORDS VIR 2026
       { id: 'veh_close', isTotalRow: true, label_en: 'CLOSING INVENTORY VALUE ON HAND (Vehicles 3 & 4 in showroom)', label_af: 'EINDVOORRAAD WAARDE VOORHANDE (Voertuie 3 & 4 in vertoonlokaal)', fields: [{ readOnly: true, staticValue: 'Vehicle 3 (380k) + Vehicle 4 (760k)' }, { field_name: 'closing_stock_vehicles' }] },
       { id: 'veh_cos', label_en: 'Total Cost of Sales (Vehicles 1, 2 and 5 sold: 455k + 625k + 520k)', label_af: 'Totale Koste van Verkope (Voertuie 1, 2 en 5 verkoop: 455k + 625k + 520k)', fields: [{ readOnly: true, staticValue: '455 000 + 625 000 + 520 000' }, { field_name: 'cost_of_sales_vehicles' }] },
       { id: 'veh_rev', label_en: 'Total Sales Revenue Realised (Vehicles 1, 2 and 5: 650k + 890k + 780k)', label_af: 'Totale Verkoopsinkomste Gerealiseer (Voertuie 1, 2 en 5: 650k + 890k + 780k)', fields: [{ readOnly: true, staticValue: '650 000 + 890 000 + 780 000' }, { field_name: 'revenue_vehicles_sold' }] },
-      { id: 'veh_gp', isTotalRow: true, label_en: 'TOTAL GROSS PROFIT REALISED (Revenue R2 320 000 - Cost of Sales R1 600 000)', label_af: 'TOTALE BRUTO WINS GEREALISEER (Inkomste R2 320 000 - Koste van Verkope)', fields: [{ readOnly: true, staticValue: '2 320 000 - 1 600 000' }, { field_name: 'gross_profit_vehicles' }] },
-      { id: 'veh_gp_pct', isTotalRow: true, label_en: 'GROSS PROFIT PERCENTAGE ACHIEVED (%) (Gross Profit / Sales Revenue * 100)', label_af: 'BRUTO WINSPERSENTASIE BEHAAL (%) (Bruto Wins / Verkope * 100)', fields: [{ readOnly: true, staticValue: '(720 000 / 2 320 000) * 100' }, { field_name: 'gross_profit_percentage' }] }
+      { id: 'veh_gp', isTotalRow: true, label_en: 'TOTAL Gross Profit REALISED (Revenue R2 320 000 - Cost of Sales R1 600 000)', label_af: 'TOTALE Bruto Wins GEREALISEER (Inkomste R2 320 000 - Koste van Verkope)', fields: [{ readOnly: true, staticValue: '2 320 000 - 1 600 000' }, { field_name: 'gross_profit_vehicles' }] },
+      { id: 'veh_gp_pct', isTotalRow: true, label_en: 'Gross Profit PERCENTAGE ACHIEVED (%) (Gross Profit / Sales Revenue * 100)', label_af: 'Bruto WinsPERSENTASIE BEHAAL (%) (Bruto Wins / Verkope * 100)', fields: [{ readOnly: true, staticValue: '(720 000 / 2 320 000) * 100' }, { field_name: 'gross_profit_percentage' }] }
     ]
   },
   total_marks: 35,
@@ -1835,7 +1835,7 @@ INLIGTING B: BANKSALDO OP 1 AUGUSTUS 2026
     columns_en: ['Cash Flow Item / Variance Analysis', 'Calculation Workings', 'Amount (R) / Percentage'],
     columns_af: ['Kontantvloei-item / Afwykingsontleding', 'Berekening Bewerkinge', 'Bedrag (R) / Persentasie'],
     rows: [
-      { id: 'act_inflow', isTotalRow: true, label_en: 'TOTAL ACTUAL CASH INFLOWS IN AUGUST 2026', label_af: 'TOTALE WERRLIKE KONTANTONTVANGSTE IN AUGUSTUS 2026', fields: [{ readOnly: true, staticValue: 'Actual from customers' }, { field_name: 'total_actual_inflows' }] },
+      { id: 'act_inflow', isTotalRow: true, label_en: 'Total Actual Cash Inflows in August 2026', label_af: 'Totale Werklike Kontantontvangste in Augustus 2026', fields: [{ readOnly: true, staticValue: 'Actual from customers' }, { field_name: 'total_actual_inflows' }] },
       { id: 'maint_var', label_en: 'Delivery Vehicle Maintenance Unfavourable Variance (32k actual - 18k budget)', label_af: 'Afleweringsvoertuig Instandhouding Ongunstige Afwyking (32k - 18k)', fields: [{ readOnly: true, staticValue: '32 000 - 18 000' }, { field_name: 'vehicle_maintenance_var' }] },
       { id: 'maint_pct', label_en: 'Maintenance Percentage Over-Budget (%) (14 000 / 18 000 * 100)', label_af: 'Instandhouding Persentasie Oor Begroting (%) (14 000 / 18 000 * 100)', fields: [{ readOnly: true, staticValue: '(14 000 / 18 000) * 100' }, { field_name: 'maintenance_var_percentage' }] },
       { id: 'act_outflow', isTotalRow: true, label_en: 'TOTAL ACTUAL CASH OUTFLOWS IN AUGUST (275k + 110k + 32k + 85k)', label_af: 'TOTALE WERRLIKE KONTANTUITVLOEIE IN AUGUSTUS (275k + 110k + 32k + 85k)', fields: [{ readOnly: true, staticValue: 'Suppliers + Salaries + Maint + Solar' }, { field_name: 'total_actual_outflows' }] },
