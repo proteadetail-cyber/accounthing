@@ -35,6 +35,9 @@ const insertFieldStmt = db.prepare(`
   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `);
 
+const fieldExplanations = require('./fieldExplanations');
+let questionCounter = 0;
+
 function addQuestion({
   paper_type, exam_type = 'final', topic_en, topic_af, subtopic_en, subtopic_af,
   difficulty = 'medium', question_text_en, question_text_af, info_section_en, info_section_af,
@@ -43,6 +46,7 @@ function addQuestion({
   fields
 }) {
   // One mark per answer cell; question total is derived so marks match the work required.
+  questionCounter += 1;
   fields.forEach(f => { f.m = 1; });
   total_marks = fields.length;
   const relabel = (s, word) => s && s.replace(new RegExp(`\\(\\d+ ${word}\\)`), `(${total_marks} ${word})`);
@@ -59,7 +63,10 @@ function addQuestion({
     insertFieldStmt.run(
       qId, f.n, f.n, f.len, f.laf, f.t || 'table_cell', f.c,
       JSON.stringify([f.c, f.c.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")]),
-      0, f.m, f.exp_en || 'Verify past paper step.', f.exp_af || 'Kyk eksamenvraag stap.', idx + 1
+      0, f.m,
+      f.exp_en || (fieldExplanations[questionCounter]?.[f.n]?.[0]) || working_solution_en,
+      f.exp_af || (fieldExplanations[questionCounter]?.[f.n]?.[1]) || working_solution_af,
+      idx + 1
     );
   });
   return qId;
