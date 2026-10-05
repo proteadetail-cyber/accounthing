@@ -8,6 +8,10 @@ const { requireActiveAccess } = require('../middleware/authMiddleware');
 router.use(requireActiveAccess);
 
 // Look up the authenticated student without creating fallback accounts.
+function resolveStudentId(req, requested) {
+  return req.user?.studentId || parseInt(requested, 10) || 1;
+}
+
 function ensureStudent(studentId) {
   const getStmt = db.prepare('SELECT * FROM students WHERE id = ?');
   return getStmt.get(studentId);
@@ -16,7 +20,8 @@ function ensureStudent(studentId) {
 // POST /api/attempts/submit - Deterministic marking of a question submission
 router.post('/submit', (req, res) => {
   try {
-    const { student_id = 1, question_id, submitted_answers = {}, lang = 'en' } = req.body;
+    const { question_id, submitted_answers = {}, lang = 'en' } = req.body;
+    const student_id = resolveStudentId(req, req.body.student_id);
 
     if (!question_id) {
       return res.status(400).json({ error: 'Question ID is required' });
@@ -74,7 +79,7 @@ router.post('/submit', (req, res) => {
 // GET /api/attempts/stats - Compute REAL database statistics & diagnostic analysis
 router.get('/stats', (req, res) => {
   try {
-    const sId = parseInt(req.query.student_id, 10) || 1;
+    const sId = resolveStudentId(req, req.query.student_id);
     const { paper_type = 'paper_1', exam_type = 'all' } = req.query;
 
     ensureStudent(sId);
@@ -210,7 +215,8 @@ router.get('/stats', (req, res) => {
 // POST /api/attempts/mock-submit - Submit full mock exam
 router.post('/mock-submit', (req, res) => {
   try {
-    const { student_id = 1, paper_type, exam_type, submissions = [], duration_seconds = 0, lang = 'en' } = req.body;
+    const { paper_type, exam_type, submissions = [], duration_seconds = 0, lang = 'en' } = req.body;
+    const student_id = resolveStudentId(req, req.body.student_id);
 
     ensureStudent(student_id);
 
@@ -226,7 +232,7 @@ router.post('/mock-submit', (req, res) => {
       const fieldsStmt = db.prepare('SELECT * FROM answer_fields WHERE question_id = ? ORDER BY sort_order ASC');
       const fields = fieldsStmt.all(sub.question_id);
 
-      const evalResult = evaluateQuestion(fields, sub.submitted_answers, lang);
+      const evalResult = evaluateQuestion(fields, sub.submitted_answers || {}, lang);
 
       totalScore += evalResult.marksEarned;
       totalMarksPossible += evalResult.totalMarks;
@@ -239,9 +245,9 @@ router.post('/mock-submit', (req, res) => {
       `).run(
         student_id,
         sub.question_id,
-        paper_type,
-        exam_type,
-        JSON.stringify(sub.submitted_answers),
+        question.paper_type,
+        question.exam_type,
+        JSON.stringify(sub.submitted_answers || {}),
         evalResult.marksEarned,
         evalResult.totalMarks,
         evalResult.percentage

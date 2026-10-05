@@ -5,16 +5,21 @@
 
 function normalizeNumeric(val) {
   if (val === null || val === undefined || val === '') return null;
-  const strVal = String(val)
-    .replace(/[R\$\s]/gi, '')
-    .replace(/,/g, '');
+  let strVal = String(val)
+    .replace(/[\u2212\u2013\u2014]/g, '-')
+    .replace(/[R\$\s\u00a0,]/gi, '');
+  // Accounting notation: (450000) means -450000
+  const bracketed = /^\(.*\)$/.test(strVal);
+  if (bracketed) strVal = strVal.slice(1, -1);
+  if (!/^[-+]?(\d+\.?\d*|\.\d+)%?$/.test(strVal)) return null;
   const parsed = parseFloat(strVal);
-  return isNaN(parsed) ? null : parsed;
+  if (isNaN(parsed)) return null;
+  return bracketed ? -Math.abs(parsed) : parsed;
 }
 
 function normalizeText(val) {
   if (val === null || val === undefined) return '';
-  return String(val).trim().toLowerCase();
+  return String(val).trim().replace(/\s+/g, ' ').toLowerCase();
 }
 
 /**
@@ -39,17 +44,17 @@ function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en') {
     let isCorrect = false;
     const answerType = field.answer_type || 'number';
 
-    if (answerType === 'number' || answerType === 'table_cell') {
-      const numSubmitted = normalizeNumeric(submittedVal);
-      const numCorrect = normalizeNumeric(field.correct_answer);
-      const tolerance = field.tolerance || 0;
+    const numCorrect = normalizeNumeric(field.correct_answer);
+    const isNumericField = (answerType === 'number' || answerType === 'table_cell') && numCorrect !== null;
 
-      if (numSubmitted !== null && numCorrect !== null) {
-        if (Math.abs(numSubmitted - numCorrect) <= tolerance) {
-          isCorrect = true;
-        }
+    if (isNumericField) {
+      const numSubmitted = normalizeNumeric(submittedVal);
+      const tolerance = Math.max(Number(field.tolerance) || 0, 1e-6);
+
+      if (numSubmitted !== null && Math.abs(numSubmitted - numCorrect) <= tolerance) {
+        isCorrect = true;
       }
-    } else if (answerType === 'text') {
+    } else if (answerType === 'text' || answerType === 'table_cell' || answerType === 'number') {
       const normSubmitted = normalizeText(submittedVal);
       const normCorrect = normalizeText(field.correct_answer);
       
@@ -70,6 +75,8 @@ function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en') {
         isCorrect = true;
       }
     }
+
+    if (normalizeText(submittedVal) === '') isCorrect = false;
 
     const earned = isCorrect ? fieldMarks : 0;
     marksEarned += earned;
