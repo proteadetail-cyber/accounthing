@@ -20,8 +20,11 @@ function requireActiveAccess(req, res, next) {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
 
-    // Master key bypass check
+    // Master key bypass check (the student row must still exist, e.g. after a database reset)
     if (decoded.isMaster || decoded.licenseKey === MASTER_KEY) {
+      if (decoded.studentId && !db.prepare('SELECT id FROM students WHERE id = ?').get(decoded.studentId)) {
+        return res.status(401).json({ error: 'Student session not found. Please log in again.' });
+      }
       return next();
     }
 

@@ -256,6 +256,9 @@ router.get('/session', (req, res) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     if (decoded.isMaster || decoded.licenseKey === MASTER_KEY) {
+      if (decoded.studentId && !db.prepare('SELECT id FROM students WHERE id = ?').get(decoded.studentId)) {
+        return res.json({ valid: false, error: 'Session no longer exists. Please log in again.' });
+      }
       return res.json({ valid: true, accessStatus: 'active', isMaster: true });
     }
 
