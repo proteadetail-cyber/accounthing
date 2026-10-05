@@ -174,9 +174,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
             <span>{language === 'af' ? 'Moeilikheidsgraad:' : 'Difficulty:'} <strong className="text-slate-950 uppercase font-extrabold">{currentQ.difficulty}</strong></span>
             <span>•</span>
             <span className="text-amber-800 font-extrabold">
-              {currentQ.fields && currentQ.fields.length > 0 
-                ? currentQ.fields.reduce((sum, f) => sum + (f.marks || 1), 0)
-                : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+              {currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
             </span>
           </div>
         </div>
@@ -225,7 +223,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                       <span>{title}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-[11px] text-amber-900 font-mono font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded">
-                          {currentQ.fields ? currentQ.fields.reduce((s, f) => s + (f.marks || 1), 0) : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+                          {currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
                         </span>
                         <span className="text-[11px] text-slate-800 font-mono font-bold bg-slate-300 px-2 py-0.5 rounded">
                           {language === 'af' ? 'ANTWOORDEBOEK TEMPLAAT' : 'ANSWER BOOK TEMPLATE'}
@@ -329,7 +327,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
               <div className="text-xs font-mono uppercase tracking-wider text-slate-950 font-extrabold flex items-center justify-between">
                 <span>{language === 'af' ? 'ANTWOORDEBLAD — VOER JOU WAARDES HIERONDER IN:' : 'ANSWER SHEET — ENTER YOUR VALUES BELOW:'}</span>
                 <span className="text-[11px] text-amber-900 font-mono font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded">
-                  {currentQ.fields ? currentQ.fields.reduce((s, f) => s + (f.marks || 1), 0) : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+                  {currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
                 </span>
               </div>
 

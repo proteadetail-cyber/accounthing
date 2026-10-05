@@ -27,3 +27,14 @@ test('wrong and blank answers score zero', () => {
   assert.strictEqual(r.marksEarned, 0);
   assert.strictEqual(r.totalMarks, 3);
 });
+
+test('keeps the declared question total when authored field weights differ', () => {
+  const fields = [
+    field(1, '100', { marks: 1 }),
+    field(2, '200', { marks: 3 })
+  ];
+  const r = evaluateQuestion(fields, { 1: '100', 2: '200' }, 'en', 10);
+  assert.strictEqual(r.marksEarned, 10);
+  assert.strictEqual(r.totalMarks, 10);
+  assert.strictEqual(r.percentage, 100);
+});

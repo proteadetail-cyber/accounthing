@@ -28,18 +28,18 @@ function normalizeText(val) {
  * @param {Array} fields Database answer_fields records for this question
  * @param {Object} submittedAnswers Key-value pair of { field_id: submitted_value }
  * @param {String} lang 'en' or 'af'
+ * @param {number} declaredTotalMarks Optional authoritative question total
  * @returns {Object} { marksEarned, totalMarks, percentage, fieldResults }
  */
-function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en') {
-  let marksEarned = 0;
-  let totalMarks = 0;
+function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en', declaredTotalMarks) {
+  let rawTotalMarks = 0;
   const fieldResults = [];
 
   for (const field of fields) {
     const fieldId = field.id;
     const submittedVal = submittedAnswers[fieldId] !== undefined ? submittedAnswers[fieldId] : '';
     const fieldMarks = field.marks || 1;
-    totalMarks += fieldMarks;
+    rawTotalMarks += fieldMarks;
 
     let isCorrect = false;
     const answerType = field.answer_type || 'number';
@@ -79,7 +79,6 @@ function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en') {
     if (normalizeText(submittedVal) === '') isCorrect = false;
 
     const earned = isCorrect ? fieldMarks : 0;
-    marksEarned += earned;
 
     fieldResults.push({
       field_id: fieldId,
@@ -94,13 +93,31 @@ function evaluateQuestion(fields, submittedAnswers = {}, lang = 'en') {
     });
   }
 
+  const totalMarks = declaredTotalMarks ?? rawTotalMarks;
+  let resultFields = fieldResults;
+  if (declaredTotalMarks !== undefined && rawTotalMarks > 0) {
+    // Keep the declared question value authoritative while preserving authored field-weight proportions.
+    let allocatedMarks = 0;
+    resultFields = fieldResults.map((result, index) => {
+      const fieldTotal = index === fieldResults.length - 1
+        ? Math.round((totalMarks - allocatedMarks) * 10) / 10
+        : Math.round((result.total_marks * totalMarks / rawTotalMarks) * 10) / 10;
+      allocatedMarks += fieldTotal;
+      return {
+        ...result,
+        total_marks: fieldTotal,
+        marks_earned: result.is_correct ? fieldTotal : 0
+      };
+    });
+  }
+  const marksEarned = resultFields.reduce((sum, result) => sum + result.marks_earned, 0);
   const percentage = totalMarks > 0 ? Math.round((marksEarned / totalMarks) * 100 * 10) / 10 : 0;
 
   return {
     marksEarned,
     totalMarks,
     percentage,
-    fieldResults
+    fieldResults: resultFields
   };
 }
 

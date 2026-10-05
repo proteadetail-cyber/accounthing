@@ -26,6 +26,7 @@ export const MockExam: React.FC = () => {
   const [showFormulaSheet, setShowFormulaSheet] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [examResult, setExamResult] = useState<any>(null);
+  const [startError, setStartError] = useState('');
 
   useEffect(() => {
     let timer: any;
@@ -41,14 +42,20 @@ export const MockExam: React.FC = () => {
 
   const startExam = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/questions?paper_type=${paperType}`, {
+      setStartError('');
+      const res = await fetch(`${API_BASE}/api/questions?paper_type=${paperType}&limit=100`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) throw new Error(`Questions request failed: ${res.status}`);
       const data = await res.json();
       const startIdx = (selectedSet - 1) * 4;
       const setQs = data.slice(startIdx, startIdx + 4);
-      setQuestions(setQs.length > 0 ? setQs : data.slice(0, 4));
+      const questionIds = new Set(setQs.map((question: Question) => question.id));
+      const totalMarks = setQs.reduce((sum: number, question: Question) => sum + question.total_marks, 0);
+      if (setQs.length !== 4 || questionIds.size !== setQs.length || totalMarks !== 150) {
+        throw new Error(`Selected mock exam set must contain four distinct questions totaling 150 marks; received ${totalMarks} marks.`);
+      }
+      setQuestions(setQs);
       setCurrentIndex(0);
       setAnswers({});
       setExamResult(null);
@@ -56,6 +63,9 @@ export const MockExam: React.FC = () => {
       setIsExamActive(true);
     } catch (err) {
       console.error('Failed to start mock exam:', err);
+      setStartError(language === 'af'
+        ? 'Hierdie eksamenvraestel kan nie begin nie: dit moet vier verskillende vrae en presies 150 punte bevat.'
+        : 'This exam set cannot start: it must contain four distinct questions and total exactly 150 marks.');
     }
   };
 
@@ -166,6 +176,12 @@ export const MockExam: React.FC = () => {
               ))}
             </div>
           </div>
+
+          {startError && (
+            <p role="alert" className="text-sm font-bold text-rose-800">
+              {startError}
+            </p>
+          )}
 
           <button
             onClick={startExam}
@@ -291,7 +307,9 @@ export const MockExam: React.FC = () => {
               ? (isPaper1 ? 'VRAESTEL 1 PROEF-OMGEWING (150 PUNTE TOTAAL)' : 'VRAESTEL 2 PROEF-OMGEWING (150 PUNTE TOTAAL)')
               : (isPaper1 ? 'PAPER 1 MOCK ENVIRONMENT (150 MARKS TOTAL)' : 'PAPER 2 MOCK ENVIRONMENT (150 MARKS TOTAL)')}
           </span>
-          <span className="text-amber-900 font-extrabold">{currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}</span>
+          <span className="text-amber-900 font-extrabold">
+            {currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'} · {questions.reduce((sum, question) => sum + question.total_marks, 0)} / 150
+          </span>
         </div>
 
         <h3 className="text-xl font-extrabold text-slate-950 leading-relaxed">
@@ -1021,4 +1039,3 @@ export const MockExam: React.FC = () => {
     </div>
   );
 };
-

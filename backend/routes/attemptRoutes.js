@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 const { evaluateQuestion, calculateEstimatedScore } = require('../services/markingEngine');
+const { validateMockExamQuestions } = require('../services/mockExam');
 const { requireActiveAccess } = require('../middleware/authMiddleware');
 
 // Apply access control middleware
@@ -39,7 +40,7 @@ router.post('/submit', (req, res) => {
     const fields = fieldsStmt.all(question_id);
 
     const submittedAnswers = submitted_answers || {};
-    const evalResult = evaluateQuestion(fields, submittedAnswers, lang);
+    const evalResult = evaluateQuestion(fields, submittedAnswers, lang, question.total_marks);
 
     const insertAttempt = db.prepare(`
       INSERT INTO attempts (
@@ -220,19 +221,41 @@ router.post('/mock-submit', (req, res) => {
 
     ensureStudent(student_id);
 
+    if (!Array.isArray(submissions)) {
+      return res.status(400).json({ error: 'Mock exam submissions must be a list of questions.' });
+    }
+
+    if (!submissions.every(sub => sub && Number.isInteger(sub.question_id) && sub.question_id > 0)) {
+      return res.status(400).json({ error: 'Every mock exam submission must include a valid question ID.' });
+    }
+
+    const questionIds = submissions.map(sub => sub.question_id);
+    if (new Set(questionIds).size !== questionIds.length) {
+      return res.status(400).json({ error: 'A mock exam cannot contain the same question more than once.' });
+    }
+
+    const questionStmt = db.prepare('SELECT * FROM questions WHERE id = ?');
+    const examQuestions = questionIds.map(id => questionStmt.get(id)).filter(Boolean);
+    if (examQuestions.length !== submissions.length) {
+      return res.status(400).json({ error: 'Every mock exam question must exist.' });
+    }
+
+    try {
+      validateMockExamQuestions(examQuestions, paper_type);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
     let totalScore = 0;
     let totalMarksPossible = 0;
     const questionResults = [];
 
-    for (const sub of submissions) {
-      const qStmt = db.prepare('SELECT * FROM questions WHERE id = ?');
-      const question = qStmt.get(sub.question_id);
-      if (!question) continue;
-
+    for (const [index, sub] of submissions.entries()) {
+      const question = examQuestions[index];
       const fieldsStmt = db.prepare('SELECT * FROM answer_fields WHERE question_id = ? ORDER BY sort_order ASC');
       const fields = fieldsStmt.all(sub.question_id);
 
-      const evalResult = evaluateQuestion(fields, sub.submitted_answers || {}, lang);
+      const evalResult = evaluateQuestion(fields, sub.submitted_answers || {}, lang, question.total_marks);
 
       totalScore += evalResult.marksEarned;
       totalMarksPossible += evalResult.totalMarks;
