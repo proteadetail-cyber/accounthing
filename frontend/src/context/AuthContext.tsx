@@ -8,6 +8,7 @@ interface AuthContextType {
   login: (licenseKey: string, language?: string) => Promise<boolean>;
   loginWithWhop: (licenseKey: string, language?: string) => Promise<boolean>;
   loginWithGoogle: (googleData: { googleToken?: string; profile?: any; language?: string }) => Promise<boolean>;
+  saveSchool: (school: string) => Promise<boolean>;
   logout: () => void;
   error: string | null;
   setError: (err: string | null) => void;
@@ -40,6 +41,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           if (!data.valid) {
             setError(data.error || 'Your Whop subscription has expired or was revoked.');
             logout();
+          } else if (data.school) {
+            setStudent(prev => {
+              if (!prev || prev.school === data.school) return prev;
+              const updated = { ...prev, school: data.school };
+              localStorage.setItem('sa_acc_student', JSON.stringify(updated));
+              return updated;
+            });
           }
         })
         .catch(() => {
@@ -107,6 +115,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const saveSchool = async (school: string): Promise<boolean> => {
+    setError(null);
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/school`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ school })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Could not save your school.');
+        if (res.status === 401 || res.status === 403) logout();
+        return false;
+      }
+      setStudent(prev => {
+        if (!prev) return prev;
+        const updated = { ...prev, school: data.school };
+        localStorage.setItem('sa_acc_student', JSON.stringify(updated));
+        return updated;
+      });
+      return true;
+    } catch (err) {
+      setError('Could not reach the server to save your school.');
+      return false;
+    }
+  };
+
   const logout = () => {
     setStudent(null);
     setToken(null);
@@ -115,7 +150,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ student, token, login, loginWithWhop, loginWithGoogle, logout, error, setError, checkoutUrl }}>
+    <AuthContext.Provider value={{ student, token, login, loginWithWhop, loginWithGoogle, saveSchool, logout, error, setError, checkoutUrl }}>
       {children}
     </AuthContext.Provider>
   );

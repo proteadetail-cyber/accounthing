@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const db = require('../db/database');
 const { validateWhopAccess, verifyWhopWebhookSignature } = require('../services/whopService');
+const { requireActiveAccess } = require('../middleware/authMiddleware');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sa_accounting_super_secret_jwt_key_2026';
 const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
@@ -110,6 +111,7 @@ router.post('/license', async (req, res) => {
       language: student.language || language,
       isMaster: !!isMaster,
       accessStatus: 'active',
+      school: student.school || null,
       whopMembershipId: whopResult.membershipId || trimmedKey,
       expiresAt: expiresAt
     }
@@ -194,7 +196,8 @@ router.post('/google', (req, res) => {
       name: student.name || name || (email ? email.split('@')[0] : 'Google Student'),
       picture: student.picture || picture,
       isGoogle: true,
-      accessStatus: 'active'
+      accessStatus: 'active',
+      school: student.school || null
     }
   });
 });
@@ -259,10 +262,11 @@ router.get('/session', (req, res) => {
       if (decoded.studentId && !db.prepare('SELECT id FROM students WHERE id = ?').get(decoded.studentId)) {
         return res.json({ valid: false, error: 'Session no longer exists. Please log in again.' });
       }
-      return res.json({ valid: true, accessStatus: 'active', isMaster: true });
+      const masterRow = decoded.studentId ? db.prepare('SELECT school FROM students WHERE id = ?').get(decoded.studentId) : null;
+      return res.json({ valid: true, accessStatus: 'active', isMaster: true, school: masterRow?.school || null });
     }
 
-    const student = db.prepare('SELECT id, license_key, access_status, expires_at FROM students WHERE id = ?').get(decoded.studentId);
+    const student = db.prepare('SELECT id, license_key, access_status, expires_at, school FROM students WHERE id = ?').get(decoded.studentId);
     if (!student) {
       return res.status(404).json({ valid: false, error: 'Student not found' });
     }
@@ -273,11 +277,30 @@ router.get('/session', (req, res) => {
     return res.json({
       valid: status === 'active',
       accessStatus: status,
-      expiresAt: student.expires_at
+      expiresAt: student.expires_at,
+      school: student.school || null
     });
   } catch (e) {
     return res.status(401).json({ valid: false, error: 'Token expired or invalid' });
   }
+});
+
+// POST /api/auth/school - Save the school the signed-in student attends
+router.post('/school', requireActiveAccess, (req, res) => {
+  const school = String(req.body?.school ?? '').replace(/\s+/g, ' ').trim();
+
+  if (school.length < 2 || school.length > 100) {
+    return res.status(400).json({ error: 'Please enter your school name (2-100 characters).' });
+  }
+  if (!req.user?.studentId) {
+    return res.status(401).json({ error: 'Student session not found. Please log in again.' });
+  }
+
+  const result = db.prepare('UPDATE students SET school = ? WHERE id = ?').run(school, req.user.studentId);
+  if (!result.changes) {
+    return res.status(401).json({ error: 'Student session not found. Please log in again.' });
+  }
+  return res.json({ school });
 });
 
 module.exports = router;

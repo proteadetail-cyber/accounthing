@@ -103,4 +103,5 @@ export interface StudentSession {
   accessStatus?: string;
   whopMembershipId?: string;
   expiresAt?: string;
+  school?: string | null;
 }

@@ -114,6 +114,7 @@ function initDatabase() {
   try { db.exec("ALTER TABLE students ADD COLUMN access_status TEXT DEFAULT 'active';"); } catch (e) {}
   try { db.exec("ALTER TABLE students ADD COLUMN expires_at DATETIME;"); } catch (e) {}
   try { db.exec("ALTER TABLE students ADD COLUMN last_verified_at DATETIME;"); } catch (e) {}
+  try { db.exec("ALTER TABLE students ADD COLUMN school TEXT;"); } catch (e) {}
 
   console.log('Database initialized successfully at:', dbPath);
 }

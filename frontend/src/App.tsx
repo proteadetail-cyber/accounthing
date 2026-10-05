@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { LicenseScreen } from './components/LicenseScreen';
+import { SchoolScreen } from './components/SchoolScreen';
 import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
 import { StudyHub } from './components/StudyHub';
@@ -27,6 +28,10 @@ const MainContent: React.FC = () => {
 
   if (!student) {
     return <LicenseScreen />;
+  }
+
+  if (!student.school) {
+    return <SchoolScreen />;
   }
 
   const handleStartPractice = (paper: PaperType, topic?: string, mode?: string) => {
