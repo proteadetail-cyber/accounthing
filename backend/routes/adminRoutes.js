@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
-
-const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
+const { isMasterKey } = require('../config/masterKeys');
 
 // Middleware for Admin authentication via master key header
 function adminAuth(req, res, next) {
   const masterHeader = req.headers['x-master-key'];
-  if (!masterHeader || masterHeader.trim() !== MASTER_KEY) {
+  if (typeof masterHeader !== 'string' || !isMasterKey(masterHeader)) {
     return res.status(403).json({ error: 'Admin access denied: Invalid or missing Master Key' });
   }
   next();

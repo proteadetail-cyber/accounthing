@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { isMasterKey } = require('../config/masterKeys');
 
 /**
  * Validates a Whop license key or membership ID against Whop's official REST API.
@@ -10,8 +11,6 @@ async function validateWhopAccess(licenseKey) {
   const WHOP_API_KEY = process.env.WHOP_API_KEY;
   const WHOP_PRODUCT_ID = process.env.WHOP_PRODUCT_ID;
   const WHOP_PLAN_ID = process.env.WHOP_PLAN_ID;
-  const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
-
   if (!licenseKey || typeof licenseKey !== 'string') {
     return { valid: false, status: 'missing_key', error: 'License key is required.' };
   }
@@ -19,7 +18,7 @@ async function validateWhopAccess(licenseKey) {
   const trimmedKey = licenseKey.trim();
 
   // 1. Master key bypass for admin / developer access
-  if (trimmedKey === MASTER_KEY) {
+  if (isMasterKey(trimmedKey)) {
     return {
       valid: true,
       status: 'active',

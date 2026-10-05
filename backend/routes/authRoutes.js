@@ -4,9 +4,20 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/database');
 const { validateWhopAccess, verifyWhopWebhookSignature } = require('../services/whopService');
 const { requireActiveAccess } = require('../middleware/authMiddleware');
+const { isMasterKey } = require('../config/masterKeys');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sa_accounting_super_secret_jwt_key_2026';
-const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
+
+// POST /api/auth/master (Admin Portal Key Verification)
+router.post('/master', (req, res) => {
+  const { masterKey } = req.body || {};
+
+  if (!isMasterKey(masterKey)) {
+    return res.status(401).json({ error: 'Invalid Master Key' });
+  }
+
+  return res.json({ valid: true });
+});
 
 // POST /api/auth/license (Whop License & Master Key Verification Endpoint)
 router.post('/license', async (req, res) => {
@@ -17,7 +28,7 @@ router.post('/license', async (req, res) => {
   }
 
   const trimmedKey = licenseKey.trim();
-  const isMaster = trimmedKey === MASTER_KEY;
+  const isMaster = isMasterKey(trimmedKey);
 
   // 1. Check local pre-seeded licenses table first if master or seeded
   let localLicense = null;
@@ -258,7 +269,7 @@ router.get('/session', (req, res) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.isMaster || decoded.licenseKey === MASTER_KEY) {
+    if (decoded.isMaster || isMasterKey(decoded.licenseKey)) {
       if (decoded.studentId && !db.prepare('SELECT id FROM students WHERE id = ?').get(decoded.studentId)) {
         return res.json({ valid: false, error: 'Session no longer exists. Please log in again.' });
       }

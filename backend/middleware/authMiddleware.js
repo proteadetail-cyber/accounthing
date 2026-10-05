@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const db = require('../db/database');
+const { isMasterKey } = require('../config/masterKeys');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sa_accounting_super_secret_jwt_key_2026';
-const MASTER_KEY = process.env.MASTER_KEY || 'Amaya@1Sage';
 
 /**
  * Express Middleware: Enforces valid JWT token AND active subscription status in database.
@@ -21,7 +21,7 @@ function requireActiveAccess(req, res, next) {
     req.user = decoded;
 
     // Master key bypass check (the student row must still exist, e.g. after a database reset)
-    if (decoded.isMaster || decoded.licenseKey === MASTER_KEY) {
+    if (decoded.isMaster || isMasterKey(decoded.licenseKey)) {
       if (decoded.studentId && !db.prepare('SELECT id FROM students WHERE id = ?').get(decoded.studentId)) {
         return res.status(401).json({ error: 'Student session not found. Please log in again.' });
       }

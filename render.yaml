@@ -13,6 +13,8 @@ services:
         sync: false
       - key: MASTER_KEY
         sync: false
+      - key: MASTER_KEYS
+        sync: false
       - key: WHOP_API_KEY
         sync: false
       - key: WHOP_PRODUCT_ID
