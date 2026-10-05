@@ -285,20 +285,21 @@ router.get('/session', (req, res) => {
   }
 });
 
-// POST /api/auth/school - Save the school the signed-in student attends
-router.post('/school', requireActiveAccess, (req, res) => {
-  const school = String(req.body?.school ?? '').replace(/\s+/g, ' ').trim();
-
-  if (school.length < 2 || school.length > 100) {
-    return res.status(400).json({ error: 'Please enter your school name (2-100 characters).' });
-  }
-  if (!req.user?.studentId) {
-    return res.status(401).json({ error: 'Student session not found. Please log in again.' });
+// POST /api/auth/school - Record the school (analytics only; never blocks access)
+router.post('/school', (req, res) => {
+  const school = String(req.body?.school ?? '').replace(/\s+/g, ' ').trim().slice(0, 100);
+  if (!school) {
+    return res.status(400).json({ error: 'Please enter your school name.' });
   }
 
-  const result = db.prepare('UPDATE students SET school = ? WHERE id = ?').run(school, req.user.studentId);
-  if (!result.changes) {
-    return res.status(401).json({ error: 'Student session not found. Please log in again.' });
+  try {
+    const header = req.headers.authorization || '';
+    const decoded = jwt.verify(header.startsWith('Bearer ') ? header.substring(7) : '', JWT_SECRET);
+    if (decoded.studentId) {
+      db.prepare('UPDATE students SET school = ? WHERE id = ?').run(school, decoded.studentId);
+    }
+  } catch (err) {
+    // Token problems must not stop the student from continuing
   }
   return res.json({ school });
 });

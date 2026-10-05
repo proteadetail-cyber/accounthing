@@ -116,30 +116,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const saveSchool = async (school: string): Promise<boolean> => {
-    setError(null);
+    const clean = school.replace(/\s+/g, ' ').trim();
+    if (!clean) return false;
+    // Analytics only: remember locally even if the server call fails
     try {
-      const res = await fetch(`${API_BASE}/api/auth/school`, {
+      await fetch(`${API_BASE}/api/auth/school`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ school })
+        body: JSON.stringify({ school: clean })
       });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || 'Could not save your school.');
-        if (res.status === 401 || res.status === 403) logout();
-        return false;
-      }
-      setStudent(prev => {
-        if (!prev) return prev;
-        const updated = { ...prev, school: data.school };
-        localStorage.setItem('sa_acc_student', JSON.stringify(updated));
-        return updated;
-      });
-      return true;
     } catch (err) {
-      setError('Could not reach the server to save your school.');
-      return false;
+      // ignore
     }
+    setStudent(prev => {
+      if (!prev) return prev;
+      const updated = { ...prev, school: clean };
+      localStorage.setItem('sa_acc_student', JSON.stringify(updated));
+      return updated;
+    });
+    return true;
   };
 
   const logout = () => {
