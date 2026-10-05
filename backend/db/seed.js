@@ -99,7 +99,10 @@ Aanpassings: 1. Huur vooruit ontvang R12 000. 2. Onbetaalde ouditeursgelde R6 00
       { id: 'sales', label_en: 'Sales', label_af: 'Verkope', fields: [{ field_name: 'sales' }] },
       { id: 'cos', label_en: 'Cost of Sales', label_af: 'Koste van verkope', fields: [{ field_name: 'cos' }] },
       { id: 'gp', label_en: 'GROSS PROFIT', label_af: 'BRUTO WINS', fields: [{ field_name: 'gross_profit' }] },
-      { id: 'rent', label_en: 'Rent Income', label_af: 'Huurinkomste', fields: [{ field_name: 'rent_income' }] },
+      { id: 'rent', label_en: 'Rent Income (adjusted)', label_af: 'Huurinkomste (aangepas)', fields: [{ field_name: 'rent_income' }] },
+      { id: 'directors', label_en: "Directors' Fees", label_af: 'Direkteursgelde', fields: [{ field_name: 'directors_fees' }] },
+      { id: 'audit', label_en: 'Audit Fees (incl. unpaid)', label_af: 'Ouditeursgelde (insluitend onbetaald)', fields: [{ field_name: 'audit_fees' }] },
+      { id: 'depn', label_en: 'Depreciation on Vehicles', label_af: 'Waardevermindering op Voertuie', fields: [{ field_name: 'depreciation' }] },
       { id: 'op_profit', label_en: 'OPERATING PROFIT', label_af: 'BEDRYFSWINS', fields: [{ field_name: 'operating_profit' }] }
     ]
   },
@@ -113,6 +116,9 @@ Aanpassings: 1. Huur vooruit ontvang R12 000. 2. Onbetaalde ouditeursgelde R6 00
     { n: 'cos', len: 'Cost of Sales', laf: 'Koste van verkope', c: '2700000', m: 10 },
     { n: 'gross_profit', len: 'Gross Profit', laf: 'Bruto Wins', c: '1800000', m: 15 },
     { n: 'rent_income', len: 'Rent Income', laf: 'Huurinkomste', c: '132000', m: 10 },
+    { n: 'directors_fees', len: "Directors' Fees", laf: 'Direkteursgelde', c: '360000', m: 1 },
+    { n: 'audit_fees', len: 'Audit Fees', laf: 'Ouditeursgelde', c: '54000', m: 1 },
+    { n: 'depreciation', len: 'Depreciation', laf: 'Waardevermindering', c: '16000', m: 1 },
     { n: 'operating_profit', len: 'Operating Profit', laf: 'Bedryfswins', c: '1502000', m: 15 }
   ]
 });
@@ -176,8 +182,8 @@ Eiewaarde: R3 875 000`,
     title_af: 'NSC NOV 2021 — FINANSIËLE VERHOUDINGS',
     columns_en: ['Indicator', 'Result / Ratio'], columns_af: ['Aanwyser', 'Resultaat / Verhouding'],
     rows: [
-      { id: 'cr', label_en: 'Current Ratio (Bedryfsverhouding)', label_af: 'Bedryfsverhouding', fields: [{ field_name: 'current_ratio' }] },
-      { id: 'acid', label_en: 'Acid-Test Ratio (Vuurproefverhouding)', label_af: 'Vuurproefverhouding', fields: [{ field_name: 'acid_test_ratio' }] },
+      { id: 'cr', label_en: 'Current Ratio', label_af: 'Bedryfsverhouding', fields: [{ field_name: 'current_ratio' }] },
+      { id: 'acid', label_en: 'Acid-Test Ratio', label_af: 'Vuurproefverhouding', fields: [{ field_name: 'acid_test_ratio' }] },
       { id: 'roe', label_en: 'Return on Equity (ROE %)', label_af: 'Opbrengs op Eiewaarde (ROE %)', fields: [{ field_name: 'roe_pct' }] }
     ]
   },
@@ -244,7 +250,9 @@ Inkomstebelasting Koers: 27%`,
     columns_en: ['Financial Line Item', 'Amount (R)'], columns_af: ['Finansiële Reëlitem', 'Bedrag (R)'],
     rows: [
       { id: 'sales', label_en: 'Sales', label_af: 'Verkope', fields: [{ field_name: 'sales' }] },
+      { id: 'cos', label_en: 'Cost of Sales', label_af: 'Koste van verkope', fields: [{ field_name: 'cos' }] },
       { id: 'gp', label_en: 'Gross Profit', label_af: 'Bruto Wins', fields: [{ field_name: 'gross_profit' }] },
+      { id: 'opex', label_en: 'Operating Expenses', label_af: 'Bedryfsuitgawes', fields: [{ field_name: 'operating_expenses' }] },
       { id: 'op_profit', label_en: 'Operating Profit', label_af: 'Bedryfswins', fields: [{ field_name: 'operating_profit' }] },
       { id: 'tax', label_en: 'Income Tax (27%)', label_af: 'Inkomstebelasting (27%)', fields: [{ field_name: 'income_tax' }] },
       { id: 'net_profit', label_en: 'NET PROFIT AFTER TAX', label_af: 'NETTO WINS NA BELASTING', fields: [{ field_name: 'net_profit_after_tax' }] }
@@ -257,7 +265,9 @@ Inkomstebelasting Koers: 27%`,
   working_solution_af: 'BW = 6.2m - 3.72m = 2.48m. Bedryfswins = 1.28m. Belasting = 1.28m * 0.27 = 345 600.',
   fields: [
     { n: 'sales', len: 'Sales', laf: 'Verkope', c: '6200000', m: 10 },
+    { n: 'cos', len: 'Cost of Sales', laf: 'Koste van verkope', c: '3720000', m: 1 },
     { n: 'gross_profit', len: 'Gross Profit', laf: 'Bruto Wins', c: '2480000', m: 10 },
+    { n: 'operating_expenses', len: 'Operating Expenses', laf: 'Bedryfsuitgawes', c: '1200000', m: 1 },
     { n: 'operating_profit', len: 'Operating Profit', laf: 'Bedryfswins', c: '1280000', m: 15 },
     { n: 'income_tax', len: 'Income Tax', laf: 'Inkomstebelasting', c: '345600', m: 10 },
     { n: 'net_profit_after_tax', len: 'Net Profit after tax', laf: 'Netto Wins na belasting', c: '934400', m: 15 }
@@ -300,8 +310,8 @@ Uitreikings Aandelekapitaal begin: 1 000 000 aandele @ R5,00 = R5 000 000. 200 0
 addQuestion({
   paper_type: 'paper_1', topic_en: 'Analysis & Interpretation', topic_af: 'Ontleding en Vertolking',
   subtopic_en: 'NSC Nov 2022 P1 Q3 (Solvency)', subtopic_af: 'NSC Nov 2022 V1 V3 (Solvabiliteit)', difficulty: 'hard',
-  question_text_en: 'QUESTION 2.3 [OFFICIAL NSC NOV 2022 P1]: Calculate Debt-Equity & ROE for Jacaranda Ltd. (35 Marks)',
-  question_text_af: 'VRAAG 2.3 [AMPTELIKE NSC NOV 2022 V1]: Bereken Skuld-Eiewaarde & ROE vir Jacaranda Bpk. (35 Punte)',
+  question_text_en: 'QUESTION 2.3 [OFFICIAL NSC NOV 2022 P1]: Calculate Debt-Equity, Solvency & ROE for Jacaranda Ltd. (35 Marks)',
+  question_text_af: 'VRAAG 2.3 [AMPTELIKE NSC NOV 2022 V1]: Bereken Skuld-Eiewaarde, Solvabiliteit & ROE vir Jacaranda Bpk. (35 Punte)',
   info_section_en: `SOURCE: OFFICIAL DBE NSC NOVEMBER 2022 EXAMINATION PAPER 1
 Loan: R1 800 000
 Shareholders Equity: R7 200 000
@@ -319,8 +329,8 @@ Totale Laste: R4 300 000`,
     title_af: 'NSC NOV 2022 — SOLVABILITEIT & FINANSIËLE RISIKO',
     columns_en: ['Indicator', 'Calculated Value'], columns_af: ['Aanwyser', 'Berekende Waarde'],
     rows: [
-      { id: 'debt_equity', label_en: 'Debt-Equity Ratio (Skuld-Eiewaarde)', label_af: 'Skuld-Eiewaarde', fields: [{ field_name: 'debt_equity' }] },
-      { id: 'solvency', label_en: 'Solvency Ratio (Solvabiliteitsverhouding)', label_af: 'Solvabiliteitsverhouding', fields: [{ field_name: 'solvency_ratio' }] },
+      { id: 'debt_equity', label_en: 'Debt-Equity Ratio', label_af: 'Skuld-Eiewaarde', fields: [{ field_name: 'debt_equity' }] },
+      { id: 'solvency', label_en: 'Solvency Ratio', label_af: 'Solvabiliteitsverhouding', fields: [{ field_name: 'solvency_ratio' }] },
       { id: 'roe', label_en: 'Return on Equity (ROE %)', label_af: 'ROE %', fields: [{ field_name: 'roe_pct' }] }
     ]
   },
@@ -388,8 +398,12 @@ Opgeloopte Bankoortrekking: R150 000`,
     title_af: 'NSC JUN 2023 — ALOE HOLDINGS BALANSSTAAT',
     columns_en: ['Equity & Liabilities Item', 'Amount (R)'], columns_af: ['Eiewaarde & Laste Item', 'Bedrag (R)'],
     rows: [
+      { id: 'share_cap', label_en: 'Share Capital', label_af: 'Aandelekapitaal', fields: [{ field_name: 'share_capital' }] },
+      { id: 'retained', label_en: 'Retained Income', label_af: 'Retensiekos', fields: [{ field_name: 'retained_income' }] },
       { id: 'equity', label_en: 'TOTAL SHAREHOLDERS EQUITY', label_af: 'TOTALE EIEWAARDE', fields: [{ field_name: 'total_equity' }] },
-      { id: 'non_curr', label_en: 'NON-CURRENT LIABILITIES (Loan)', label_af: 'NIET-BEDRYFSLASTE (Lening)', fields: [{ field_name: 'non_current_liabilities' }] },
+      { id: 'non_curr', label_en: 'NON-CURRENT LIABILITIES (Long-term Loan)', label_af: 'NIE-BEDRYFSLASTE (Langtermyn Lening)', fields: [{ field_name: 'non_current_liabilities' }] },
+      { id: 'trade_pay', label_en: 'Trade Payables', label_af: 'Handelskrediteure', fields: [{ field_name: 'trade_payables' }] },
+      { id: 'overdraft', label_en: 'Bank Overdraft', label_af: 'Bankoortrekking', fields: [{ field_name: 'bank_overdraft' }] },
       { id: 'curr', label_en: 'CURRENT LIABILITIES', label_af: 'BEDRYFSLASTE', fields: [{ field_name: 'current_liabilities' }] },
       { id: 'total_el', label_en: 'TOTAL EQUITY AND LIABILITIES', label_af: 'TOTALE EIEWAARDE EN LASTE', fields: [{ field_name: 'total_equity_liabilities' }] }
     ]
@@ -400,8 +414,12 @@ Opgeloopte Bankoortrekking: R150 000`,
   working_solution_en: 'Equity = 8m+1.4m=9.4m. Current = 650k+150k=800k. Total = 9.4m+2.2m+800k = 12.4m.',
   working_solution_af: 'Eiewaarde = 8m+1.4m=9.4m. Bedryfs = 650k+150k=800k. Totaal = 9.4m+2.2m+800k = 12.4m.',
   fields: [
+    { n: 'share_capital', len: 'Share Capital', laf: 'Aandelekapitaal', c: '8000000', m: 1 },
+    { n: 'retained_income', len: 'Retained Income', laf: 'Retensiekos', c: '1400000', m: 1 },
     { n: 'total_equity', len: 'Total Shareholders Equity', laf: 'Totale Eiewaarde', c: '9400000', m: 15 },
     { n: 'non_current_liabilities', len: 'Non-Current Liabilities', laf: 'Niet-bedryfslaste', c: '2200000', m: 15 },
+    { n: 'trade_payables', len: 'Trade Payables', laf: 'Handelskrediteure', c: '650000', m: 1 },
+    { n: 'bank_overdraft', len: 'Bank Overdraft', laf: 'Bankoortrekking', c: '150000', m: 1 },
     { n: 'current_liabilities', len: 'Current Liabilities', laf: 'Bedryfslaste', c: '800000', m: 15 },
     { n: 'total_equity_liabilities', len: 'Total Equity & Liabilities', laf: 'Totale Eiewaarde & Laste', c: '12400000', m: 15 }
   ]
@@ -538,6 +556,9 @@ Oninvorderbare Skulde afgeskryf: R8 000`,
       { id: 'sales', label_en: 'Sales', label_af: 'Verkope', fields: [{ field_name: 'sales' }] },
       { id: 'cos', label_en: 'Cost of Sales', label_af: 'Koste van verkope', fields: [{ field_name: 'cos' }] },
       { id: 'gp', label_en: 'Gross Profit', label_af: 'Bruto Wins', fields: [{ field_name: 'gross_profit' }] },
+      { id: 'opex_given', label_en: 'Operating Expenses', label_af: 'Bedryfsuitgawes', fields: [{ field_name: 'operating_expenses' }] },
+      { id: 'stock_def', label_en: 'Trading Stock Deficit', label_af: 'Handelsvoorraadtekort', fields: [{ field_name: 'stock_deficit' }] },
+      { id: 'bad_debts', label_en: 'Bad Debts Written Off', label_af: 'Oninvorderbare Skulde Afgeskryf', fields: [{ field_name: 'bad_debts' }] },
       { id: 'op_exp', label_en: 'Total Operating Expenses (Adjusted)', label_af: 'Totale Bedryfsuitgawes (Aangepas)', fields: [{ field_name: 'total_op_exp' }] },
       { id: 'op_profit', label_en: 'OPERATING PROFIT', label_af: 'BEDRYFSWINS', fields: [{ field_name: 'operating_profit' }] }
     ]
@@ -551,6 +572,9 @@ Oninvorderbare Skulde afgeskryf: R8 000`,
     { n: 'sales', len: 'Sales', laf: 'Verkope', c: '5800000', m: 10 },
     { n: 'cos', len: 'Cost of Sales', laf: 'Koste van verkope', c: '3480000', m: 10 },
     { n: 'gross_profit', len: 'Gross Profit', laf: 'Bruto Wins', c: '2320000', m: 10 },
+    { n: 'operating_expenses', len: 'Operating Expenses', laf: 'Bedryfsuitgawes', c: '1100000', m: 1 },
+    { n: 'stock_deficit', len: 'Trading Stock Deficit', laf: 'Handelsvoorraadtekort', c: '15000', m: 1 },
+    { n: 'bad_debts', len: 'Bad Debts Written Off', laf: 'Oninvorderbare Skulde Afgeskryf', c: '8000', m: 1 },
     { n: 'total_op_exp', len: 'Total Op Expenses', laf: 'Totale Bedryfsuitgawes', c: '1123000', m: 15 },
     { n: 'operating_profit', len: 'Operating Profit', laf: 'Bedryfswins', c: '1197000', m: 15 }
   ]
@@ -664,13 +688,13 @@ Bankstaat Saldo: R28 500 (Db). Uitstaande Deposito: R14 000. Uitstaande Tjeks: N
   tableConfig: {
     title_en: 'NSC NOV 2021 — BANK RECONCILIATION STATEMENT',
     title_af: 'NSC NOV 2021 — BANKVERSOENINGSSTAAT',
-    columns_en: ['Details', 'Debit (R)', 'Credit (R)'], columns_af: ['Besonderhede', 'Debiet (R)', 'Krediet (R)'],
+    columns_en: ['Details', 'Amount (R)'], columns_af: ['Besonderhede', 'Bedrag (R)'],
     rows: [
-      { id: 'stmt_bal', label_en: 'Balance as per Bank Statement', label_af: 'Saldo volgens Bankstaat', fields: [{ field_name: 'stmt_bal' }] },
-      { id: 'dep', label_en: 'Credit Outstanding Deposit', label_af: 'Krediteer Uitstaande Deposito', fields: [{ field_name: 'outstanding_dep' }] },
-      { id: 'chk_1', label_en: 'Debit Outstanding Cheque No. 412', label_af: 'Debiteer Uitstaande Tjek No. 412', fields: [{ field_name: 'chk_412' }] },
-      { id: 'chk_2', label_en: 'Debit Outstanding Cheque No. 418', label_af: 'Debiteer Uitstaande Tjek No. 418', fields: [{ field_name: 'chk_418' }] },
-      { id: 'acc_bal', label_en: 'Balance as per Bank Account', label_af: 'Saldo volgens Bankrekening', fields: [{ field_name: 'bank_acc_bal' }] }
+      { id: 'stmt_bal', label_en: 'Balance as per Bank Statement (Dr)', label_af: 'Saldo volgens Bankstaat (Db)', fields: [{ field_name: 'stmt_bal' }] },
+      { id: 'dep', label_en: 'Outstanding Deposit', label_af: 'Uitstaande Deposito', fields: [{ field_name: 'outstanding_dep' }] },
+      { id: 'chk_1', label_en: 'Outstanding Cheque No. 412', label_af: 'Uitstaande Tjek No. 412', fields: [{ field_name: 'chk_412' }] },
+      { id: 'chk_2', label_en: 'Outstanding Cheque No. 418', label_af: 'Uitstaande Tjek No. 418', fields: [{ field_name: 'chk_418' }] },
+      { id: 'acc_bal', label_en: 'Balance as per Bank Account (Dr)', label_af: 'Saldo volgens Bankrekening (Db)', fields: [{ field_name: 'bank_acc_bal' }] }
     ]
   },
   total_marks: 35,
@@ -803,7 +827,10 @@ Saldo in Krediteuregrootboek: R45 000. Saldo op Krediteurestaat: R52 000. Afslag
     title_af: 'NSC NOV 2022 — KREDITEUREVERSOENING',
     columns_en: ['Reconciliation Line', 'Creditors Ledger (R)', 'Statement (R)'], columns_af: ['Versoeningsreël', 'Krediteuregrootboek (R)', 'Staat (R)'],
     rows: [
-      { id: 'correct_bal', label_en: 'CORRECTED EQUAL BALANCE', label_af: 'GEKORRIGEERDE GELYKE SALDO', fields: [{ field_name: 'corrected_creditor_bal' }] }
+      { id: 'opening', label_en: 'Balance before corrections', label_af: 'Saldo voor korrigerings', fields: [{ readOnly: true, staticValue: '45 000' }, { readOnly: true, staticValue: '52 000' }] },
+      { id: 'discount', label_en: 'Discount omitted (deduct)', label_af: 'Afslag weggelaat (aftrek)', fields: [{ field_name: 'ledger_discount' }, { readOnly: true, staticValue: '-' }] },
+      { id: 'duplicate', label_en: 'Invoice entered twice (deduct)', label_af: 'Faktuur dubbel ingeskryf (aftrek)', fields: [{ readOnly: true, staticValue: '-' }, { field_name: 'stmt_duplicate' }] },
+      { id: 'correct_bal', label_en: 'CORRECTED BALANCE', label_af: 'GEKORRIGEERDE SALDO', fields: [{ field_name: 'corrected_creditor_bal' }, { field_name: 'corrected_stmt_bal' }] }
     ]
   },
   total_marks: 35,
@@ -812,15 +839,18 @@ Saldo in Krediteuregrootboek: R45 000. Saldo op Krediteurestaat: R52 000. Afslag
   working_solution_en: 'Ledger: 45k - 2k (discount omitted) = 43 000. Statement: 52k - 9k (duplicate invoice) = 43 000. Both agree.',
   working_solution_af: 'Grootboek: 45k - 2k (afslag weggelaat) = 43 000. Staat: 52k - 9k (dubbel faktuur) = 43 000. Beide stem ooreen.',
   fields: [
-    { n: 'corrected_creditor_bal', len: 'Corrected Balance', laf: 'Gekorrigeerde Saldo', c: '43000', m: 35 }
+    { n: 'ledger_discount', len: 'Discount omitted', laf: 'Afslag weggelaat', c: '2000', m: 1 },
+    { n: 'stmt_duplicate', len: 'Invoice entered twice', laf: 'Faktuur dubbel ingeskryf', c: '9000', m: 1 },
+    { n: 'corrected_creditor_bal', len: 'Corrected Ledger Balance', laf: 'Gekorrigeerde Grootboeksaldo', c: '43000', m: 1 },
+    { n: 'corrected_stmt_bal', len: 'Corrected Statement Balance', laf: 'Gekorrigeerde Staatsaldo', c: '43000', m: 1 }
   ]
 });
 
 addQuestion({
   paper_type: 'paper_2', topic_en: 'Cost Accounting', topic_af: 'Koste-rekeningkunde',
   subtopic_en: 'NSC Nov 2022 P2 Q2 (Break-Even)', subtopic_af: 'NSC Nov 2022 V2 V2 (Gelykbreekpunt)', difficulty: 'hard',
-  question_text_en: 'QUESTION 6.2 [OFFICIAL NSC NOV 2022 P2]: Break-Even Units & Margin of Safety of Jacaranda Factory. (45 Marks)',
-  question_text_af: 'VRAAG 6.2 [AMPTELIKE NSC NOV 2022 V2]: Gelykbreek-eenhede & Veiligheidsgrens van Jacaranda Fabriek. (45 Punte)',
+  question_text_en: 'QUESTION 6.2 [OFFICIAL NSC NOV 2022 P2]: Contribution, Break-Even Units & Margin of Safety of Jacaranda Factory. (45 Marks)',
+  question_text_af: 'VRAAG 6.2 [AMPTELIKE NSC NOV 2022 V2]: Bydrae, Gelykbreek-eenhede & Veiligheidsgrens van Jacaranda Fabriek. (45 Punte)',
   info_section_en: `SOURCE: OFFICIAL DBE NSC NOVEMBER 2022 EXAMINATION PAPER 2
 Total Fixed Costs: R450 000
 Selling price per unit: R120
@@ -898,7 +928,9 @@ Februarie R120 000. Invorderingspatroon: 40% in verkopemaand (2% afslag), 50% in
     title_af: 'NSC NOV 2022 — DEBITEURE-INVORDERINGSKEDULE',
     columns_en: ['Month of Sale', 'Credit Sales (R)', 'February Collection (R)'], columns_af: ['Verkopemaand', 'Kredietverkope (R)', 'Februarie Invordering (R)'],
     rows: [
-      { id: 'feb_col', label_en: 'TOTAL CASH COLLECTED IN FEBRUARY', label_af: 'TOTALE KONTANT ONTVANG IN FEBRUARIE', fields: [{ field_name: 'total_feb_collected' }] }
+      { id: 'jan', label_en: 'January', label_af: 'Januarie', fields: [{ readOnly: true, staticValue: '100 000' }, { field_name: 'jan_collected' }] },
+      { id: 'feb', label_en: 'February', label_af: 'Februarie', fields: [{ readOnly: true, staticValue: '120 000' }, { field_name: 'feb_collected' }] },
+      { id: 'feb_col', label_en: 'TOTAL CASH COLLECTED IN FEBRUARY', label_af: 'TOTALE KONTANT ONTVANG IN FEBRUARIE', fields: [{ readOnly: true, staticValue: '-' }, { field_name: 'total_feb_collected' }] }
     ]
   },
   total_marks: 35,
@@ -907,6 +939,8 @@ Februarie R120 000. Invorderingspatroon: 40% in verkopemaand (2% afslag), 50% in
   working_solution_en: 'From Jan: 100k*50% = 50 000. From Feb: (120k*40%)-2% = 48 000 - 960 = 47 040. Total = 97 040.',
   working_solution_af: 'Van Jan: 50 000. Van Feb: 48 000 - 960 = 47 040. Totaal = 97 040.',
   fields: [
+    { n: 'jan_collected', len: 'January sales collected in February', laf: 'Januarie-verkope in Februarie ontvang', c: '50000', m: 1 },
+    { n: 'feb_collected', len: 'February sales collected in February', laf: 'Februarie-verkope in Februarie ontvang', c: '47040', m: 1 },
     { n: 'total_feb_collected', len: 'Total Feb Collection', laf: 'Totale Feb Invordering', c: '97040', m: 35 }
   ]
 });
@@ -942,8 +976,8 @@ EFT betaaling van R4 200 aan kediteur is foutiewelik in die KBJ ingeskryf as R2 
 addQuestion({
   paper_type: 'paper_2', topic_en: 'Cost Accounting', topic_af: 'Koste-rekeningkunde',
   subtopic_en: 'NSC Jun 2023 P2 Q2 (Factory Overheads)', subtopic_af: 'NSC Jun 2023 V2 V2 (Fabrieksbokoste)', difficulty: 'hard',
-  question_text_en: 'QUESTION 7.2 [OFFICIAL NSC JUN 2023 P2]: Factory Overhead Cost Note & Material Costs. (45 Marks)',
-  question_text_af: 'VRAAG 7.2 [AMPTELIKE NSC JUN 2023 V2]: Fabrieksbokoste Nota & Materiaalkoste. (45 Punte)',
+  question_text_en: 'QUESTION 7.2 [OFFICIAL NSC JUN 2023 P2]: Factory Overhead Cost Note of Aloe Enterprise. (45 Marks)',
+  question_text_af: 'VRAAG 7.2 [AMPTELIKE NSC JUN 2023 V2]: Fabrieksbokoste Nota van Aloe Onderneming. (45 Punte)',
   info_section_en: `SOURCE: OFFICIAL DBE NSC JUNE 2023 EXAMINATION PAPER 2
 Factory Rent: R120 000 (allocated 75% to factory). Indirect labour: R90 000. Factory Electricity: R45 000.`,
   info_section_af: `BRON: AMPTELIKE DBE NSC JUNE 2023 EKSAMENVRAESTEL 2
@@ -1078,8 +1112,10 @@ Totale geproduseerde eenhede: 30 000`,
     title_af: 'NSC NOV 2024 — EENHEIDSKOSTE SKEDULE',
     columns_en: ['Cost Category', 'Total Amount (R)', 'Cost per Unit (R)'], columns_af: ['Kostekategorie', 'Totale Bedrag (R)', 'Koste per Eenheid (R)'],
     rows: [
-      { id: 'total_prod', label_en: 'TOTAL PRODUCTION COST', label_af: 'TOTALE PRODUKSIEKOSTE', fields: [{ field_name: 'springbok_total_cost' }] },
-      { id: 'unit_cost', label_en: 'TOTAL COST PER UNIT', label_af: 'TOTALE KOSTE PER EENHEID', fields: [{ field_name: 'springbok_unit_cost' }] }
+      { id: 'rm', label_en: 'Raw materials used', label_af: 'Grondstowwe gebruik', fields: [{ readOnly: true, staticValue: '720 000' }, { field_name: 'rm_unit_cost' }] },
+      { id: 'dl', label_en: 'Direct labour', label_af: 'Direkte arbeid', fields: [{ readOnly: true, staticValue: '540 000' }, { field_name: 'dl_unit_cost' }] },
+      { id: 'foh', label_en: 'Factory overheads', label_af: 'Fabrieksbokoste', fields: [{ readOnly: true, staticValue: '360 000' }, { field_name: 'foh_unit_cost' }] },
+      { id: 'total_prod', label_en: 'TOTAL PRODUCTION COST', label_af: 'TOTALE PRODUKSIEKOSTE', fields: [{ field_name: 'springbok_total_cost' }, { field_name: 'springbok_unit_cost' }] }
     ]
   },
   total_marks: 45,
@@ -1088,6 +1124,9 @@ Totale geproduseerde eenhede: 30 000`,
   working_solution_en: 'Total = 720k + 540k + 360k = 1 620 000. Unit Cost = 1 620 000 / 30 000 = R54,00.',
   working_solution_af: 'Totaal = 1 620 000. Eenheidskoste = 1 620 000 / 30 000 = R54,00.',
   fields: [
+    { n: 'rm_unit_cost', len: 'Raw materials per unit', laf: 'Grondstowwe per eenheid', c: '24', m: 1 },
+    { n: 'dl_unit_cost', len: 'Direct labour per unit', laf: 'Direkte arbeid per eenheid', c: '18', m: 1 },
+    { n: 'foh_unit_cost', len: 'Factory overheads per unit', laf: 'Fabrieksbokoste per eenheid', c: '12', m: 1 },
     { n: 'springbok_total_cost', len: 'Total Production Cost', laf: 'Totale Produksiekoste', c: '1620000', m: 22 },
     { n: 'springbok_unit_cost', len: 'Unit Cost', laf: 'Eenheidskoste', c: '54.00', m: 23 }
   ]
