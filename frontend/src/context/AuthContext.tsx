@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Session verification on mount
   useEffect(() => {
     if (token) {
-      fetch(`${API_BASE}/api/auth/session`, {
+      fetch(`${API_BASE}/api/auth/session${token ? `?token=${token}` : ''}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
         .then(res => res.json())
@@ -56,6 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
+  // Login with license key
   const login = async (licenseKey: string, language = 'en'): Promise<boolean> => {
     setError(null);
     try {
@@ -64,19 +65,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ licenseKey, language })
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         setError(data.error || 'Invalid or expired Whop license key.');
         return false;
       }
-
       setStudent(data.student);
       setToken(data.token);
       localStorage.setItem('sa_acc_student', JSON.stringify(data.student));
       localStorage.setItem('sa_acc_token', data.token);
-
       return true;
     } catch (err: any) {
       console.error('Login error:', err);
@@ -87,6 +84,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const loginWithWhop = login;
 
+  // Login with Google
   const loginWithGoogle = async ({ googleToken, profile, language = 'en' }: { googleToken?: string; profile?: any; language?: string }): Promise<boolean> => {
     setError(null);
     try {
@@ -95,19 +93,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ googleToken, profile, language })
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         setError(data.error || 'Google authentication failed.');
         return false;
       }
-
       setStudent(data.student);
       setToken(data.token);
       localStorage.setItem('sa_acc_student', JSON.stringify(data.student));
       localStorage.setItem('sa_acc_token', data.token);
-
       return true;
     } catch (err: any) {
       setError('Google Sign-In server connection failed.');

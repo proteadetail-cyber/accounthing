@@ -130,7 +130,7 @@ router.post('/license', async (req, res) => {
 });
 
 // Google OAuth Sign-In Endpoint
-router.post('/google', (req, res) => {
+router.post('/google', async (req, res) => {
   const { googleToken, profile, language = 'en' } = req.body;
 
   let email = '';
@@ -165,47 +165,192 @@ router.post('/google', (req, res) => {
   }
 
   const lookupKey = googleId || email;
-  let studentStmt = db.prepare('SELECT * FROM students WHERE google_id = ? OR email = ?');
+  let studentStmt = db.prepare('SELECT * FROM students WHERE (google_id = ? OR email = ?) AND license_key IS NOT NULL AND license_key != ""');
   let student = studentStmt.get(lookupKey, email || lookupKey);
 
-  if (!student) {
-    const licenseKey = `GOOGLE_${googleId ? googleId.substring(0, 12) : Date.now()}`;
-    const insertStudent = db.prepare(
-      'INSERT INTO students (license_key, language, email, name, picture, google_id, access_status) VALUES (?, ?, ?, ?, ?, ?, ?)'
+  // If student exists and has a linked Whop license key, verify license validity
+  if (student && student.license_key) {
+    const trimmedKey = student.license_key.trim();
+    const isMaster = trimmedKey === MASTER_KEY;
+
+    let whopResult = null;
+    if (isMaster) {
+      whopResult = { valid: true, status: 'active', isMaster: true };
+    } else {
+      const licStmt = db.prepare('SELECT * FROM licenses WHERE key_code = ? AND is_active = 1');
+      const localLicense = licStmt.get(trimmedKey);
+      if (localLicense) {
+        whopResult = { valid: true, status: 'active', membershipId: localLicense.key_code };
+      } else {
+        whopResult = await validateWhopAccess(trimmedKey);
+      }
+    }
+
+    if (!whopResult.valid) {
+      return res.status(401).json({
+        error: whopResult.error || 'Your linked Whop license key is no longer active.',
+        checkoutUrl: process.env.WHOP_CHECKOUT_URL || 'https://whop.com'
+      });
+    }
+
+    // Update login timestamp
+    db.prepare('UPDATE students SET last_login = CURRENT_TIMESTAMP, name = ?, picture = ? WHERE id = ?')
+      .run(name || student.name || '', picture || student.picture || '', student.id);
+
+    const token = jwt.sign(
+      { studentId: student.id, email: student.email, licenseKey: trimmedKey, isGoogle: true },
+      JWT_SECRET,
+      { expiresIn: '30d' }
     );
-    const info = insertStudent.run(licenseKey, language, email, name, picture, lookupKey, 'active');
+
+    return res.json({
+      message: 'Google Sign-In successful with linked Whop license.',
+      token,
+      student: {
+        id: student.id,
+        licenseKey: trimmedKey,
+        language: student.language || language,
+        isMaster: !!isMaster,
+        email: student.email || email,
+        name: student.name || name || (email ? email.split('@')[0] : 'Google Student'),
+        picture: student.picture || picture,
+        isGoogle: true,
+        accessStatus: 'active'
+      }
+    });
+  }
+
+  // If Google account is not yet linked to a Whop license key, require linking
+  return res.json({
+    requireLicenseLink: true,
+    googleProfile: {
+      email,
+      name: name || (email ? email.split('@')[0] : 'Google User'),
+      picture,
+      googleId: lookupKey
+    }
+  });
+});
+
+// Link Whop License Key to Google Account Endpoint
+router.post('/link-google-license', async (req, res) => {
+  const { googleProfile, licenseKey, language = 'en' } = req.body;
+
+  if (!googleProfile || !googleProfile.email) {
+    return res.status(400).json({ error: 'Google account details are required.' });
+  }
+
+  if (!licenseKey || typeof licenseKey !== 'string') {
+    return res.status(400).json({ error: 'Whop license key is required to link access.' });
+  }
+
+  const trimmedKey = licenseKey.trim();
+  const isMaster = trimmedKey === MASTER_KEY;
+
+  // 1. Verify Whop License Key
+  let localLicense = null;
+  if (!isMaster) {
+    const licStmt = db.prepare('SELECT * FROM licenses WHERE key_code = ? AND is_active = 1');
+    localLicense = licStmt.get(trimmedKey);
+  }
+
+  let whopResult = null;
+  if (isMaster || localLicense) {
+    whopResult = {
+      valid: true,
+      status: 'active',
+      isMaster,
+      membershipId: isMaster ? 'master-key' : localLicense.key_code
+    };
+  } else {
+    whopResult = await validateWhopAccess(trimmedKey);
+  }
+
+  if (!whopResult.valid) {
+    return res.status(401).json({
+      error: whopResult.error || 'Invalid or expired Whop license key.',
+      checkoutUrl: process.env.WHOP_CHECKOUT_URL || 'https://whop.com'
+    });
+  }
+
+  // 2. Link Whop License to Google Account in SQLite
+  const lookupKey = googleProfile.googleId || googleProfile.email;
+  let studentStmt = db.prepare('SELECT * FROM students WHERE email = ? OR google_id = ?');
+  let student = studentStmt.get(googleProfile.email, lookupKey);
+
+  const expiresAt = whopResult.expiresAt || null;
+
+  if (!student) {
+    const insertStudent = db.prepare(`
+      INSERT INTO students (
+        license_key, language, email, name, picture, google_id,
+        whop_user_id, whop_membership_id, whop_product_id, whop_plan_id, access_status, expires_at, last_verified_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `);
+    const info = insertStudent.run(
+      trimmedKey,
+      language,
+      googleProfile.email,
+      googleProfile.name,
+      googleProfile.picture || '',
+      lookupKey,
+      whopResult.userId || null,
+      whopResult.membershipId || trimmedKey,
+      whopResult.productId || null,
+      whopResult.planId || null,
+      'active',
+      expiresAt
+    );
     student = {
       id: info.lastInsertRowid,
-      license_key: licenseKey,
+      license_key: trimmedKey,
       language,
-      email,
-      name,
-      picture,
+      email: googleProfile.email,
+      name: googleProfile.name,
+      picture: googleProfile.picture || '',
       google_id: lookupKey,
       access_status: 'active'
     };
   } else {
-    db.prepare('UPDATE students SET last_login = CURRENT_TIMESTAMP, name = ?, picture = ?, email = ? WHERE id = ?')
-      .run(name || student.name || '', picture || student.picture || '', email || student.email || '', student.id);
+    db.prepare(`
+      UPDATE students SET 
+        license_key = ?,
+        google_id = ?,
+        name = ?,
+        picture = ?,
+        language = ?,
+        access_status = 'active',
+        expires_at = ?,
+        last_login = CURRENT_TIMESTAMP,
+        last_verified_at = CURRENT_TIMESTAMP
+      WHERE id = ?
+    `).run(trimmedKey, lookupKey, googleProfile.name, googleProfile.picture || '', language, expiresAt, student.id);
   }
 
+  // 3. Issue JWT Token
   const token = jwt.sign(
-    { studentId: student.id, email: student.email, isGoogle: true },
+    { 
+      studentId: student.id, 
+      email: student.email, 
+      licenseKey: trimmedKey, 
+      isMaster: !!isMaster,
+      isGoogle: true 
+    },
     JWT_SECRET,
     { expiresIn: '30d' }
   );
 
   return res.json({
-    message: 'Google Sign-In successful.',
+    message: 'Whop license successfully linked to your Google Account!',
     token,
     student: {
       id: student.id,
-      licenseKey: student.license_key || 'GOOGLE_AUTH',
-      language: student.language || 'en',
-      isMaster: false,
-      email: student.email || email,
-      name: student.name || name || (email ? email.split('@')[0] : 'Google Student'),
-      picture: student.picture || picture,
+      licenseKey: trimmedKey,
+      language: student.language || language,
+      isMaster: !!isMaster,
+      email: student.email,
+      name: student.name,
+      picture: student.picture,
       isGoogle: true,
       accessStatus: 'active',
       school: student.school || null
