@@ -104,16 +104,16 @@ Aanpassings: 1. Huur vooruit ontvang R12 000. 2. Onbetaalde ouditeursgelde R6 00
     ]
   },
   total_marks: 60,
-  explanation_en: 'Official NSC Solution: Gross Profit = 1 800 000, Operating Profit = 820 000',
-  explanation_af: 'Amptelike NSC Oplossing: Bruto Wins = 1 800 000, Bedryfswins = 820 000',
-  working_solution_en: 'Sales 4.5m - COS 2.7m = GP 1.8m. Rent = 144k - 12k = 132k.',
-  working_solution_af: 'Verkope 4.5m - KVK 2.7m = BW 1.8m. Huur = 144k - 12k = 132k.',
+  explanation_en: 'Official NSC Solution: Gross Profit = 1 800 000, Operating Profit = 1 502 000',
+  explanation_af: 'Amptelike NSC Oplossing: Bruto Wins = 1 800 000, Bedryfswins = 1 502 000',
+  working_solution_en: 'Sales 4.5m - COS 2.7m = GP 1.8m. Rent = 144k - 12k = 132k. Op Profit = 1.8m + 132k - 360k (directors) - 54k (audit 48k + 6k) - 16k (depreciation) = 1 502 000.',
+  working_solution_af: 'Verkope 4.5m - KVK 2.7m = BW 1.8m. Huur = 144k - 12k = 132k. Bedryfswins = 1.8m + 132k - 360k (direkteure) - 54k (oudit 48k + 6k) - 16k (waardevermindering) = 1 502 000.',
   fields: [
     { n: 'sales', len: 'Sales', laf: 'Verkope', c: '4500000', m: 10 },
     { n: 'cos', len: 'Cost of Sales', laf: 'Koste van verkope', c: '2700000', m: 10 },
     { n: 'gross_profit', len: 'Gross Profit', laf: 'Bruto Wins', c: '1800000', m: 15 },
     { n: 'rent_income', len: 'Rent Income', laf: 'Huurinkomste', c: '132000', m: 10 },
-    { n: 'operating_profit', len: 'Operating Profit', laf: 'Bedryfswins', c: '820000', m: 15 }
+    { n: 'operating_profit', len: 'Operating Profit', laf: 'Bedryfswins', c: '1502000', m: 15 }
   ]
 });
 
@@ -795,9 +795,9 @@ addQuestion({
   question_text_en: 'QUESTION 6.1 [OFFICIAL NSC NOV 2022 P2]: Creditors Statement & Ledger Reconciliation of Jacaranda Traders. (35 Marks)',
   question_text_af: 'VRAAG 6.1 [AMPTELIKE NSC NOV 2022 V2]: Krediteurestaat & Grootboekversoening van Jacaranda Handelaars. (35 Punte)',
   info_section_en: `SOURCE: OFFICIAL DBE NSC NOVEMBER 2022 EXAMINATION PAPER 2
-Balance in Creditors Ledger: R45 000. Balance on Creditor Statement: R52 000. Discount R2 000 omitted. Invoice R9 000 entered twice.`,
+Balance in Creditors Ledger: R45 000. Balance on Creditor Statement: R52 000. Discount R2 000 omitted. Invoice R9 000 entered twice on the creditor's statement.`,
   info_section_af: `BRON: AMPTELIKE DBE NSC NOVEMBER 2022 EKSAMENVRAESTEL 2
-Saldo in Krediteuregrootboek: R45 000. Saldo op Krediteurestaat: R52 000. Afslag R2 000 weggelate. Faktuur R9 000 dubbel ingeskryf.`,
+Saldo in Krediteuregrootboek: R45 000. Saldo op Krediteurestaat: R52 000. Afslag R2 000 weggelate. Faktuur R9 000 dubbel op die krediteurestaat ingeskryf.`,
   tableConfig: {
     title_en: 'NSC NOV 2022 — CREDITORS RECONCILIATION',
     title_af: 'NSC NOV 2022 — KREDITEUREVERSOENING',
@@ -807,12 +807,12 @@ Saldo in Krediteuregrootboek: R45 000. Saldo op Krediteurestaat: R52 000. Afslag
     ]
   },
   total_marks: 35,
-  explanation_en: 'Official NSC Solution: Corrected Balance = R34 000',
-  explanation_af: 'Amptelike NSC Oplossing: Gekorrigeerde Saldo = R34 000',
-  working_solution_en: 'Ledger: 45k - 2k (discount) - 9k (duplicate invoice) = 34 000.',
-  working_solution_af: 'Grootboek: 45k - 2k (afslag) - 9k (dubbel faktuur) = 34 000.',
+  explanation_en: 'Official NSC Solution: Corrected Balance = R43 000',
+  explanation_af: 'Amptelike NSC Oplossing: Gekorrigeerde Saldo = R43 000',
+  working_solution_en: 'Ledger: 45k - 2k (discount omitted) = 43 000. Statement: 52k - 9k (duplicate invoice) = 43 000. Both agree.',
+  working_solution_af: 'Grootboek: 45k - 2k (afslag weggelaat) = 43 000. Staat: 52k - 9k (dubbel faktuur) = 43 000. Beide stem ooreen.',
   fields: [
-    { n: 'corrected_creditor_bal', len: 'Corrected Balance', laf: 'Gekorrigeerde Saldo', c: '34000', m: 35 }
+    { n: 'corrected_creditor_bal', len: 'Corrected Balance', laf: 'Gekorrigeerde Saldo', c: '43000', m: 35 }
   ]
 });
 
@@ -918,9 +918,9 @@ addQuestion({
   question_text_en: 'QUESTION 7.1 [OFFICIAL NSC JUN 2023 P2]: Internal Control & Bank Reconciliation Adjustments of Aloe Enterprise. (35 Marks)',
   question_text_af: 'VRAAG 7.1 [AMPTELIKE NSC JUN 2023 V2]: Interne Beheer & Bankversoening Aanpassings van Aloe Onderneming. (35 Punte)',
   info_section_en: `SOURCE: OFFICIAL DBE NSC JUNE 2023 EXAMINATION PAPER 2
-EFT payment of R4 200 to a creditor was erroneously recorded in the CRJ as R2 400.`,
+EFT payment of R4 200 to a creditor was erroneously recorded in the CPJ as R2 400.`,
   info_section_af: `BRON: AMPTELIKE DBE NSC JUNE 2023 EKSAMENVRAESTEL 2
-EFT betaaling van R4 200 aan kediteur is foutiewelik in die KOR ingeskryf as R2 400.`,
+EFT betaaling van R4 200 aan kediteur is foutiewelik in die KBJ ingeskryf as R2 400.`,
   tableConfig: {
     title_en: 'NSC JUN 2023 — CORRECTION OF ERROR',
     title_af: 'NSC JUN 2023 — FOUTKORREKSIE',
