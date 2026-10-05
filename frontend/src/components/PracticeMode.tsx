@@ -284,27 +284,49 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
 
                                   const isEvaluated = result !== null;
                                   const fieldRes = result?.field_results.find(r => r.field_id === matchedQField.id);
+                                  const isLargeTableField = matchedQField.marks >= 4;
+                                  const boxHeightPx = matchedQField.marks <= 2 ? 40 : matchedQField.marks <= 4 ? 62 : matchedQField.marks <= 7 ? 90 : matchedQField.marks <= 10 ? 150 : Math.min(240, 150 + (matchedQField.marks - 10) * 16);
 
                                   return (
-                                    <td key={fIdx} className="p-2 border-r border-slate-300/80 last:border-r-0 min-w-[130px]">
-                                      <div className="relative flex items-center gap-1.5">
-                                        <input
-                                          type="text"
-                                          value={userAnswers[matchedQField.id] || ''}
-                                          onChange={(e) => handleInputChange(matchedQField.id, e.target.value)}
-                                          disabled={isEvaluated || isSubmitting}
-                                          placeholder={language === 'af' ? 'Voer bedrag in...' : 'Enter amount...'}
-                                          className={`w-full px-3 py-2 rounded-xl bg-white text-slate-950 font-black text-black text-xs sm:text-sm font-mono tracking-wider focus:ring-2 focus:outline-none transition-all placeholder:text-slate-400/40 ${
-                                            fieldRes?.is_correct === true
-                                              ? 'border-2 border-emerald-600 bg-emerald-50 text-emerald-950'
-                                              : fieldRes?.is_correct === false
-                                              ? 'border-2 border-rose-600 bg-rose-50 text-rose-950'
-                                              : 'border border-slate-400 focus:border-cyan-600'
-                                          }`}
-                                        />
-                                        <span className="text-[10px] font-mono text-slate-700 font-extrabold whitespace-nowrap bg-slate-200/80 px-1.5 py-0.5 rounded">
-                                          [{matchedQField.marks}m]
-                                        </span>
+                                    <td key={fIdx} className="p-2.5 border-r border-slate-300/80 last:border-r-0 min-w-[150px] align-top">
+                                      <div className="relative flex flex-col gap-1">
+                                        <div className="flex items-center justify-between">
+                                          <span className="text-[10px] font-mono text-slate-700 font-extrabold bg-slate-200/90 px-1.5 py-0.5 rounded border border-slate-300 shadow-xs">
+                                            [{matchedQField.marks}m {matchedQField.marks >= 5 ? '• calc block' : ''}]
+                                          </span>
+                                        </div>
+                                        {isLargeTableField ? (
+                                          <textarea
+                                            style={{ minHeight: `${boxHeightPx}px`, height: `${boxHeightPx}px` }}
+                                            value={userAnswers[matchedQField.id] || ''}
+                                            onChange={(e) => handleInputChange(matchedQField.id, e.target.value)}
+                                            disabled={isEvaluated || isSubmitting}
+                                            placeholder={language === 'af' ? 'Wys berekening & voer bedrag in...' : 'Show calculation & enter amount...'}
+                                            className={`w-full p-2.5 rounded-xl bg-white text-slate-950 font-black text-black text-xs sm:text-sm font-mono tracking-wider focus:ring-2 focus:outline-none transition-all shadow-inner leading-6 bg-[linear-gradient(to_bottom,transparent_23px,#e2e8f0_24px)] bg-[size:100%_24px] placeholder:text-slate-400/40 ${
+                                              fieldRes?.is_correct === true
+                                                ? 'border-2 border-emerald-600 bg-emerald-50 text-emerald-950'
+                                                : fieldRes?.is_correct === false
+                                                ? 'border-2 border-rose-600 bg-rose-50 text-rose-950'
+                                                : 'border border-slate-400 focus:border-cyan-600'
+                                            }`}
+                                          />
+                                        ) : (
+                                          <input
+                                            type="text"
+                                            style={{ minHeight: `${boxHeightPx}px`, height: `${boxHeightPx}px` }}
+                                            value={userAnswers[matchedQField.id] || ''}
+                                            onChange={(e) => handleInputChange(matchedQField.id, e.target.value)}
+                                            disabled={isEvaluated || isSubmitting}
+                                            placeholder={language === 'af' ? 'Voer bedrag in...' : 'Enter amount...'}
+                                            className={`w-full px-3 py-2 rounded-xl bg-white text-slate-950 font-black text-black text-xs sm:text-sm font-mono tracking-wider focus:ring-2 focus:outline-none transition-all placeholder:text-slate-400/40 ${
+                                              fieldRes?.is_correct === true
+                                                ? 'border-2 border-emerald-600 bg-emerald-50 text-emerald-950'
+                                                : fieldRes?.is_correct === false
+                                                ? 'border-2 border-rose-600 bg-rose-50 text-rose-950'
+                                                : 'border border-slate-400 focus:border-cyan-600'
+                                            }`}
+                                          />
+                                        )}
                                       </div>
                                     </td>
                                   );
