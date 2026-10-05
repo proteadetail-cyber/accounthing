@@ -339,6 +339,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                   const isBigField = field.marks > 3;
 
                   if (isBigField) {
+                    const markHeightCm = Math.max(2.5, Math.min(12, field.marks * 0.95));
                     return (
                       <div key={field.id} className="flex flex-col gap-2 p-4 rounded-xl bg-[#EBE7DF] hover:bg-[#E0DACF] border border-slate-300/80 transition-all duration-200">
                         <div className="flex items-center justify-between">
@@ -352,7 +353,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-[11px] font-mono font-extrabold text-cyan-900 bg-cyan-100 px-2.5 py-0.5 rounded border border-cyan-300 uppercase">
-                              {language === 'af' ? `BEWERKINGS / BEREKENINGSBLOK (${field.marks} PUNTE)` : `WORKING / CALCULATION BLOCK (${field.marks} MARKS)`}
+                              {language === 'af' ? `BEWERKINGS / BEREKENINGSBLOK (~${field.marks}cm VIR ${field.marks} PUNTE)` : `WORKING / CALCULATION BLOCK (~${field.marks}cm FOR ${field.marks} MARKS)`}
                             </span>
                             <span className="text-xs font-mono text-slate-950 font-extrabold">
                               [{field.marks}m]
@@ -361,12 +362,12 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                         </div>
 
                         <textarea
-                          rows={4}
+                          style={{ minHeight: `${markHeightCm}cm` }}
                           value={userAnswers[field.id] || ''}
                           onChange={(e) => handleInputChange(field.id, e.target.value)}
                           disabled={isEvaluated || isSubmitting}
                           placeholder={language === 'af' ? 'Wys alle berekeninge, bewerkings en finale antwoord...' : 'Show all calculations, workings, and final answer...'}
-                          className={`w-full p-3 rounded-xl bg-white text-slate-950 font-black text-black placeholder-slate-400/40 text-sm font-mono tracking-wider focus:ring-2 focus:outline-none shadow-inner ${
+                          className={`w-full p-3.5 rounded-xl bg-white text-slate-950 font-black text-black placeholder-slate-400/40 text-sm font-mono tracking-wider focus:ring-2 focus:outline-none shadow-inner leading-7 bg-[linear-gradient(to_bottom,transparent_27px,#e2e8f0_28px)] bg-[size:100%_28px] ${
                             fieldRes?.is_correct === true
                               ? 'border-2 border-emerald-600 bg-emerald-50 text-emerald-950'
                               : fieldRes?.is_correct === false

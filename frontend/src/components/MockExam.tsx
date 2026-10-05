@@ -454,6 +454,7 @@ export const MockExam: React.FC = () => {
                 const isBigField = field.marks > 3;
 
                 if (isBigField) {
+                  const markHeightCm = Math.max(2.5, Math.min(12, field.marks * 0.95));
                   return (
                     <div key={field.id} className="flex flex-col gap-2 p-4 rounded-xl bg-[#EBE7DF] hover:bg-[#E0DACF] border border-slate-300/80 transition-all duration-200">
                       <div className="flex items-center justify-between">
@@ -466,8 +467,8 @@ export const MockExam: React.FC = () => {
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-mono font-extrabold text-cyan-900 bg-cyan-100 px-2 py-0.5 rounded border border-cyan-300">
-                            {language === 'af' ? `BEWERKINGS / BEREKENINGSBLOK (${field.marks} PUNTE)` : `WORKING / CALCULATION BLOCK (${field.marks} MARKS)`}
+                          <span className="text-[11px] font-mono font-extrabold text-cyan-900 bg-cyan-100 px-2.5 py-0.5 rounded border border-cyan-300 uppercase">
+                            {language === 'af' ? `BEWERKINGS / BEREKENINGSBLOK (~${field.marks}cm VIR ${field.marks} PUNTE)` : `WORKING / CALCULATION BLOCK (~${field.marks}cm FOR ${field.marks} MARKS)`}
                           </span>
                           <span className="text-xs font-mono text-slate-950 font-extrabold">
                             [{field.marks}m]
@@ -476,11 +477,11 @@ export const MockExam: React.FC = () => {
                       </div>
 
                       <textarea
-                        rows={4}
+                        style={{ minHeight: `${markHeightCm}cm` }}
                         value={val}
                         onChange={(e) => handleInputChange(currentQ.id, field.id, e.target.value)}
                         placeholder={language === 'af' ? 'Wys alle bewerkings, berekeninge en finale waarde...' : 'Show all workings, calculations, and final value...'}
-                        className="w-full p-3 rounded-xl bg-white text-slate-950 font-black text-black text-sm font-mono tracking-wider border border-slate-400 focus:ring-2 focus:ring-slate-950 focus:outline-none shadow-inner placeholder:text-slate-400/40"
+                        className="w-full p-3.5 rounded-xl bg-white text-slate-950 font-black text-black text-sm font-mono tracking-wider border border-slate-400 focus:ring-2 focus:ring-slate-950 focus:outline-none shadow-inner placeholder:text-slate-400/40 leading-7 bg-[linear-gradient(to_bottom,transparent_27px,#e2e8f0_28px)] bg-[size:100%_28px]"
                       />
                     </div>
                   );
