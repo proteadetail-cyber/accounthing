@@ -23,10 +23,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPractice }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchStats();
+    let cancelled = false;
+    setStats(null);
+    fetchStats(() => cancelled);
+    return () => { cancelled = true; };
   }, [paperType]);
 
-  const fetchStats = async () => {
+  const fetchStats = async (isCancelled: () => boolean) => {
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE}/api/attempts/stats?student_id=${student?.id || 1}&paper_type=${paperType}&exam_type=all`, {
@@ -34,11 +37,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPractice }) => {
       });
       if (!res.ok) throw new Error(`Dashboard stats request failed: ${res.status}`);
       const data = await res.json();
-      setStats(data);
+      if (!isCancelled()) setStats(data);
     } catch (err) {
       console.error('Failed to load dashboard stats:', err);
     } finally {
-      setLoading(false);
+      if (!isCancelled()) setLoading(false);
     }
   };
 

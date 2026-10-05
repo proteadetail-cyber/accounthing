@@ -43,7 +43,7 @@ variables, then rerun the Pages workflow.
 
 1. **100% Authentic Official DBE NSC Dataset**:
    - **32 Full Past Paper Questions** from DBE NSC 2021, 2022, 2023 & 2024.
-   - **1 200 Total Marks** across Paper 1 (Financial Accounting & Corporate Reporting) & Paper 2 (Managerial Accounting, Costing & Controls).
+   - Marks awarded per answer cell (1 mark each) across Paper 1 (Financial Accounting & Corporate Reporting) & Paper 2 (Managerial Accounting, Costing & Controls).
    - **Full Line Item Answer Sheets**: Complete multi-row Income Statements (21 rows), Balance Sheets (16 rows), Cash Flow Statements (12 rows), and Working Tables matching official DBE answer booklets.
 
 2. **Google Sign-In & Authentication**:

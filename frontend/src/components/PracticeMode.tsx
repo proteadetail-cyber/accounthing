@@ -29,6 +29,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
   const [result, setResult] = useState<AttemptResult | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     loadQuestions();
@@ -36,6 +37,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
 
   const loadQuestions = async () => {
     setLoading(true);
+    setLoadError(null);
     setResult(null);
     setUserAnswers({});
     try {
@@ -55,8 +57,9 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
       } else {
         setCurrentIndex(0);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to load practice questions:', err);
+      setLoadError(err?.message || 'Could not connect to questions server.');
     } finally {
       setLoading(false);
     }
@@ -68,10 +71,13 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
     setUserAnswers(prev => ({ ...prev, [fieldId]: val }));
   };
 
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const handleSubmit = async () => {
     if (!currentQ || isSubmitting) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
     try {
       const res = await fetch(`${API_BASE}/api/attempts/submit`, {
         method: 'POST',
@@ -88,9 +94,13 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || `Submit failed with status ${res.status}`);
+      }
       setResult(data);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to submit answer:', err);
+      setSubmitError(err?.message || 'Could not reach server to mark question.');
     } finally {
       setIsSubmitting(false);
     }
@@ -124,9 +134,11 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
           {language === 'af' ? 'Geen Vrae Beskikbaar Nie' : 'No Questions Available'}
         </h2>
         <p className="text-sm text-slate-800 font-mono font-bold">
-          {language === 'af' 
-            ? `Geen oefenvrae gevind vir ${paperType === 'paper_1' ? 'Vraestel 1' : 'Vraestel 2'} nie.` 
-            : `No practice questions found for ${paperType === 'paper_1' ? 'Paper 1' : 'Paper 2'}.`}
+          {loadError 
+            ? `Server Error: ${loadError}`
+            : (language === 'af' 
+                ? `Geen oefenvrae gevind vir ${paperType === 'paper_1' ? 'Vraestel 1' : 'Vraestel 2'} nie.` 
+                : `No practice questions found for ${paperType === 'paper_1' ? 'Paper 1' : 'Paper 2'}.`)}
         </p>
         <button
           onClick={loadQuestions}
@@ -161,7 +173,11 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
           <div className="flex items-center gap-3 font-mono text-xs text-slate-950 font-bold">
             <span>{language === 'af' ? 'Moeilikheidsgraad:' : 'Difficulty:'} <strong className="text-slate-950 uppercase font-extrabold">{currentQ.difficulty}</strong></span>
             <span>•</span>
-            <span className="text-amber-800 font-extrabold">{currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}</span>
+            <span className="text-amber-800 font-extrabold">
+              {currentQ.fields && currentQ.fields.length > 0 
+                ? currentQ.fields.reduce((sum, f) => sum + (f.marks || 1), 0)
+                : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+            </span>
           </div>
         </div>
 
@@ -207,9 +223,14 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                   <div className="space-y-3 pt-2">
                     <div className="text-xs font-mono uppercase tracking-wider text-slate-950 font-extrabold flex items-center justify-between">
                       <span>{title}</span>
-                      <span className="text-[11px] text-slate-800 font-mono font-bold bg-slate-300 px-2 py-0.5 rounded">
-                        {language === 'af' ? 'ANTWOORDEBOEK TEMPLAAT' : 'ANSWER BOOK TEMPLATE'}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[11px] text-amber-900 font-mono font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded">
+                          {currentQ.fields ? currentQ.fields.reduce((s, f) => s + (f.marks || 1), 0) : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+                        </span>
+                        <span className="text-[11px] text-slate-800 font-mono font-bold bg-slate-300 px-2 py-0.5 rounded">
+                          {language === 'af' ? 'ANTWOORDEBOEK TEMPLAAT' : 'ANSWER BOOK TEMPLATE'}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="overflow-x-auto rounded-2xl border-2 border-slate-900 bg-[#EBE7DF] shadow-md">
@@ -268,7 +289,7 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
 
                                   return (
                                     <td key={fIdx} className="p-2 border-r border-slate-300/80 last:border-r-0 min-w-[130px]">
-                                      <div className="relative flex items-center">
+                                      <div className="relative flex items-center gap-1.5">
                                         <input
                                           type="text"
                                           value={userAnswers[matchedQField.id] || ''}
@@ -283,6 +304,9 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
                                               : 'border border-slate-400 focus:border-cyan-600'
                                           }`}
                                         />
+                                        <span className="text-[10px] font-mono text-slate-700 font-extrabold whitespace-nowrap bg-slate-200/80 px-1.5 py-0.5 rounded">
+                                          [{matchedQField.marks}m]
+                                        </span>
                                       </div>
                                     </td>
                                   );
@@ -302,8 +326,11 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
             })()
           ) : (
             <>
-              <div className="text-xs font-mono uppercase tracking-wider text-slate-950 font-extrabold">
-                {language === 'af' ? 'ANTWOORDEBLAD — VOER JOU WAARDES HIERONDER IN:' : 'ANSWER SHEET — ENTER YOUR VALUES BELOW:'}
+              <div className="text-xs font-mono uppercase tracking-wider text-slate-950 font-extrabold flex items-center justify-between">
+                <span>{language === 'af' ? 'ANTWOORDEBLAD — VOER JOU WAARDES HIERONDER IN:' : 'ANSWER SHEET — ENTER YOUR VALUES BELOW:'}</span>
+                <span className="text-[11px] text-amber-900 font-mono font-extrabold bg-amber-100 border border-amber-300 px-2 py-0.5 rounded">
+                  {currentQ.fields ? currentQ.fields.reduce((s, f) => s + (f.marks || 1), 0) : currentQ.total_marks} {language === 'af' ? 'PUNTE' : 'MARKS'}
+                </span>
               </div>
 
               <div className="space-y-3 bg-[#DFD9CD] p-4 sm:p-6 rounded-2xl border border-slate-300/80">
@@ -393,14 +420,21 @@ export const PracticeMode: React.FC<PracticeModeProps> = ({ initialPaper, initia
 
         {/* Submit / Action Button */}
         {!result ? (
-          <div className="pt-4 flex justify-end">
-            <button
-              onClick={handleSubmit}
-              disabled={isSubmitting || Object.keys(userAnswers).length === 0}
-              className="px-8 py-4 rounded-2xl font-mono font-bold text-xs tracking-widest uppercase transition-all duration-300 bg-slate-950 hover:bg-slate-800 text-white shadow-xl active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <span>{isSubmitting ? t('submitting') : t('check_answer')}</span>
-            </button>
+          <div className="pt-4 space-y-3">
+            {submitError && (
+              <div className="p-3.5 rounded-xl bg-rose-100 border border-rose-300 text-rose-950 font-mono text-xs font-bold">
+                ⚠️ {submitError}
+              </div>
+            )}
+            <div className="flex justify-end">
+              <button
+                onClick={handleSubmit}
+                disabled={isSubmitting || Object.keys(userAnswers).length === 0}
+                className="px-8 py-4 rounded-2xl font-mono font-bold text-xs tracking-widest uppercase transition-all duration-300 bg-slate-950 hover:bg-slate-800 text-white shadow-xl active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <span>{isSubmitting ? t('submitting') : t('check_answer')}</span>
+              </button>
+            </div>
           </div>
         ) : null}
 

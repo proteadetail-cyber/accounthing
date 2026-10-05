@@ -43,8 +43,12 @@ router.get('/', (req, res) => {
 
   const result = questions.map(q => {
     const fields = fieldStmt.all(q.id);
+    const computedTotal = fields && fields.length > 0 
+      ? fields.reduce((sum, f) => sum + (f.marks || 1), 0)
+      : q.total_marks;
     return {
       ...q,
+      total_marks: computedTotal,
       fields
     };
   });
@@ -67,9 +71,13 @@ router.get('/:id', (req, res) => {
   `);
   
   const fields = fieldStmt.all(question.id);
+  const computedTotal = fields && fields.length > 0
+    ? fields.reduce((sum, f) => sum + (f.marks || 1), 0)
+    : question.total_marks;
 
   res.json({
     ...question,
+    total_marks: computedTotal,
     fields
   });
 });

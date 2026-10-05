@@ -89,19 +89,7 @@ router.get('/stats', (req, res) => {
 
     attemptQuery += ' ORDER BY created_at DESC';
 
-    let attempts = db.prepare(attemptQuery).all(...params);
-
-    // Fallback: If no attempts found for specific paper_type, fetch all student attempts
-    if (attempts.length === 0) {
-      let fallbackQuery = 'SELECT * FROM attempts WHERE student_id = ?';
-      const fallbackParams = [sId];
-      if (exam_type && exam_type !== 'all') {
-        fallbackQuery += ' AND exam_type = ?';
-        fallbackParams.push(exam_type);
-      }
-      fallbackQuery += ' ORDER BY created_at DESC';
-      attempts = db.prepare(fallbackQuery).all(...fallbackParams);
-    }
+    const attempts = db.prepare(attemptQuery).all(...params);
 
     const completedCount = attempts.length;
     let averagePercentage = 0;
@@ -150,24 +138,7 @@ router.get('/stats', (req, res) => {
 
     topicQuery += ' GROUP BY q.topic_en ORDER BY avg_pct ASC';
 
-    let rawTopics = db.prepare(topicQuery).all(...topicParams);
-
-    // Fallback for topic performance if specific paper_type is empty
-    if (rawTopics.length === 0 && completedCount > 0) {
-      let fallbackTopicQuery = `
-        SELECT q.topic_en, q.topic_af, AVG(a.percentage) as avg_pct, COUNT(a.id) as attempt_count
-        FROM attempts a
-        JOIN questions q ON a.question_id = q.id
-        WHERE a.student_id = ?
-      `;
-      const fallbackTopicParams = [sId];
-      if (exam_type && exam_type !== 'all') {
-        fallbackTopicQuery += ' AND a.exam_type = ?';
-        fallbackTopicParams.push(exam_type);
-      }
-      fallbackTopicQuery += ' GROUP BY q.topic_en ORDER BY avg_pct ASC';
-      rawTopics = db.prepare(fallbackTopicQuery).all(...fallbackTopicParams);
-    }
+    const rawTopics = db.prepare(topicQuery).all(...topicParams);
 
     const topicPerformance = rawTopics.map(t => ({
       topic_en: t.topic_en,
@@ -213,19 +184,7 @@ router.get('/stats', (req, res) => {
       WHERE a.student_id = ? AND a.paper_type = ?
       ORDER BY a.created_at DESC LIMIT 10
     `;
-    let recentActivity = db.prepare(recentQuery).all(sId, paper_type);
-
-    if (recentActivity.length === 0 && completedCount > 0) {
-      let fallbackRecent = `
-        SELECT a.id, a.question_id, a.paper_type, a.exam_type, a.marks_earned, a.total_marks, a.percentage, a.created_at,
-               q.topic_en, q.topic_af
-        FROM attempts a
-        JOIN questions q ON a.question_id = q.id
-        WHERE a.student_id = ?
-        ORDER BY a.created_at DESC LIMIT 10
-      `;
-      recentActivity = db.prepare(fallbackRecent).all(sId);
-    }
+    const recentActivity = db.prepare(recentQuery).all(sId, paper_type);
 
     res.json({
       paper_type,

@@ -1,6 +1,6 @@
 const db = require('./database');
 
-console.log('Seeding OFFICIAL DBE NSC PAST PAPERS (2021-2024) Grade 12 Accounting database (32 Questions = 1 200 Marks)...');
+console.log('Seeding OFFICIAL DBE NSC PAST PAPERS (2021-2024) Grade 12 Accounting database (32 Questions)...');
 
 // Insert default licenses
 const licenses = [
@@ -42,6 +42,12 @@ function addQuestion({
   explanation_en, explanation_af, working_solution_en, working_solution_af,
   fields
 }) {
+  // One mark per answer cell; question total is derived so marks match the work required.
+  fields.forEach(f => { f.m = 1; });
+  total_marks = fields.length;
+  const relabel = (s, word) => s && s.replace(new RegExp(`\\(\\d+ ${word}\\)`), `(${total_marks} ${word})`);
+  question_text_en = relabel(question_text_en, 'Marks');
+  question_text_af = relabel(question_text_af, 'Punte');
   const res = insertQStmt.run(
     paper_type, exam_type, topic_en, topic_af, subtopic_en, subtopic_af,
     difficulty, question_text_en, question_text_af, info_section_en, info_section_af,
